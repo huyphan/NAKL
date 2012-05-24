@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #include "KeyboardHandler.h"
-#include "data.h"
 #include "keymap.h"
 
 @implementation AppDelegate
@@ -74,6 +73,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 case XK_Begin:
                 case XK_Tab:
                 case XK_BackSpace:
+
                     [kbHandler clearBuffer];
                     break;
                     
@@ -184,6 +184,10 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     } else {
         kbHandler.kbMethod = VKM_OFF;
     }
+}
+
+- (IBAction) quit:(id)sender {
+    [NSApp terminate:self];
 }
 
 @end
