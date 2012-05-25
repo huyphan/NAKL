@@ -26,6 +26,7 @@ typedef enum {
     int kbBLength, kbPLength;
     int kbMethod;
     UniChar _kbBuffer[256];
+    UniChar* kbBuffer;
     NSArray *vowelsMap;
     UniChar word[WORDSIZE];
 }

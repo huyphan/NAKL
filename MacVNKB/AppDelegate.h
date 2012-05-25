@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *window;
+    NSWindow *_window;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;    
     NSImage *statusImage;

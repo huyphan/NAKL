@@ -56,6 +56,7 @@ int tempoff = 0;
             self.kbBuffer[i] = '\b';
         }
     }
+
     self.kbMethod = VKM_VNI;
 
     UniChar groupA[] = {   
