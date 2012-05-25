@@ -1,16 +1,27 @@
-//
-//  AppDelegate.m
-//  MacVNKB
-//
-//  Created by Huy Phan on 20/5/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+/*******************************************************************************
+ * Copyright (c) 2012 Huy Phan <dachuy@gmail.com>
+ * This file is part of NAKL project.
+ * 
+ * NAKL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * NAKL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with NAKL.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 
 #import "AppDelegate.h"
 #include "KeyboardHandler.h"
 #include "keymap.h"
 
-#define VK_MAGIC_NUMBER 0xCAFEBABE
+
+#define VK_MAGIC_NUMBER 536870912L // 1<<29
 
 @implementation AppDelegate
 
@@ -24,7 +35,7 @@ static char *separators[] = {
 };
 
 KeyboardHandler *kbHandler;
-CGEventSourceRef eventSource;
+
 static char rk = 0;
 bool dirty;
 
@@ -39,8 +50,9 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 
     CGEventKeyboardGetUnicodeString(event, maxStringLength, &actualStringLength, chars);
 
-    uint64_t magic = CGEventGetIntegerValueField(event, kCGEventSourceUserData);
-    if (magic == VK_MAGIC_NUMBER) {
+    uint64_t flag = CGEventGetFlags(event);
+    
+    if (flag == VK_MAGIC_NUMBER) {
         return event;
     }
 
@@ -71,7 +83,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 case XK_Begin:
                 case XK_Tab:
                 case XK_BackSpace:
-
                     [kbHandler clearBuffer];
                     break;
                     
@@ -95,25 +106,27 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         default:
                             x = kbHandler.kbBuffer+BACKSPACE_BUFFER-kbHandler.kbPLength;
                             for (i = 0;i<kbHandler.kbBLength + kbHandler.kbPLength;i++,x++) {
-
-                                CGEventRef keyEventDown = CGEventCreateKeyboardEvent(eventSource, 1, true);
-                                CGEventRef keyEventUp = CGEventCreateKeyboardEvent(eventSource, 1, false);                            
+                                CGEventRef keyEventDown = CGEventCreateKeyboardEvent( NULL, 1, true);
+                                CGEventRef keyEventUp = CGEventCreateKeyboardEvent(NULL, 1, false);                            
                                 
                                 CGEventSetFlags(keyEventDown, CGEventGetFlags(event));
                                 CGEventSetFlags(keyEventUp, CGEventGetFlags(event));
                                     
                                 CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
                                 CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);
-                                
+
+                                CGEventSetFlags(keyEventDown,VK_MAGIC_NUMBER);
+                                CGEventSetFlags(keyEventUp,VK_MAGIC_NUMBER);                                
+
                                 if (*x == '\b') {
-                                    CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);                                        
-                                    CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);        
-                                }
-                                
-                                CGEventPost(kCGSessionEventTap, keyEventDown);                                
+                                    CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
+                                    CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);
+                                }                            
+
+                                CGEventPost(kCGSessionEventTap, keyEventDown);
                                 CGEventPost(kCGSessionEventTap, keyEventUp);
 
-                                CFRelease(keyEventDown);                                
+                                CFRelease(keyEventDown);
                                 CFRelease(keyEventUp);
                             }
                             return NULL;
@@ -147,7 +160,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  );
 
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
-                                eventMask, KeyHandler, NULL);
+                                eventMask, KeyHandler, self);
     if (!eventTap) {
         fprintf(stderr, "failed to create event tap\n");
         exit(1);
@@ -162,11 +175,8 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
     kbHandler = [[KeyboardHandler alloc] init];
-    kbHandler.kbMethod = VKM_VNI;
+    kbHandler.kbMethod = VKM_TELEX;
     [statusItem setTitle:@"vni"];
-    
-    eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    CGEventSourceSetUserData(eventSource, VK_MAGIC_NUMBER);
 
     [self performSelectorInBackground:@selector(eventLoop) withObject:nil];
 }

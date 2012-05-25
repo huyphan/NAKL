@@ -1,10 +1,21 @@
-//
-//  KeyboardHandler.m
-//  MacVNKB
-//
-//  Created by Huy Phan on 20/5/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+/*******************************************************************************
+ * Copyright (c) 2012 Huy Phan <dachuy@gmail.com>
+ * This file is part of NAKL project.
+ * 
+ * NAKL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * NAKL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with NAKL.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 #import "KeyboardHandler.h"
 #import "utf.h"
@@ -387,7 +398,7 @@ int tempoff = 0;
 
     i = p;
 
-    /* Loop back to search for the closest ascii vowel */
+    /* Loop back to search for the closest character that can match with current key */
     while ((i >= 0) && ![self isValidModifier:word[i]:key] ) {
         i--;
     }
@@ -397,7 +408,7 @@ int tempoff = 0;
         return -1;
     }
         
-    /* Loop back to search for the closest unicode vowel */
+    /* If there's any character that can match with current key, we modify it first  */
     while ( (i-1 >= 0) &&
            (strchr(vowels, word[i-1]) || (word[i-1] > 0x80) ) 
             && ([self utfVnCmp:word[i-1]:word[i]] < 0) 
@@ -405,7 +416,7 @@ int tempoff = 0;
            ) {
         i--;
     }
-        
+  
     if( i == count-1 && i-1 >= 0 &&	(j = [self uiGroup:word[i-1]]) > 0 )
     {
         switch( word[i] ) {
@@ -426,9 +437,18 @@ int tempoff = 0;
                     i = i - 1;
 				break;
             }
-     }
+    }
+        
+    /* Try to prevent modifying long words (probably when typing foreign language)
+       TODO: this code is *hacky*, it need to be replaced by a proper spellcheck.
+     */
+    NSLog(@"%d",p-i);
+    if (p - i > BACKSPACE_BUFFER) {
+        [self append:c:key];
+        return -1;        
+    }
     
-     c = word[p = i];   
+    c = word[p = i];   
 
 
     for( i = 0; (cc = v[i].c) != 0 && c != cc; i++ );
@@ -438,7 +458,7 @@ int tempoff = 0;
         return -1;        
     }
     
-    kbPLength = count - p;
+    kbPLength = count - p;  
 	if( !v[i].r2 ) {
 		word[ p ] = v[i].r1;
 		backup[ p ] = c;
@@ -449,6 +469,7 @@ int tempoff = 0;
 	}
     
     [self mapToCharset:&word[p]:count-p];
+
 	return p;
 }
 
