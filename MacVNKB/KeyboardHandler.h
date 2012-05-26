@@ -25,12 +25,8 @@
 #define BACKSPACE_BUFFER 3
 
 typedef enum {
-    VKM_OFF, VKM_VNI, VKM_TELEX, VKM_VIQR
+    VKM_OFF, VKM_VNI, VKM_TELEX
 } vk_methods;
-
-typedef enum {
-    VKC_TCVN, VKC_VNI, VKC_VIQR, VKC_VISCII, VKC_VPS, VKC_UTF8
-} vk_charsets;
 
 @interface KeyboardHandler : NSObject {
     int kbBLength, kbPLength;
