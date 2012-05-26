@@ -9,7 +9,7 @@ Contributing
 * Please report issues on the [GitHub issue tracker](https://github.com/huyphan/NAKL/issues). Personal emails are not appropriate for bug reports. 
 * Patches are preferred as GitHub pull requests. Contributors are welcome to request free beer from author of this project.
 
-Credit
+Credits
 =======
 * chuoi (a.k.a Dao Hai Lam): author of [xvnkb](http://xvnkb.sourceforge.net). 
 * Thanks to mybb (a.k.a hieuln) and pmquan (a.k.a co`i) for helping me out testing this software.
