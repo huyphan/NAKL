@@ -16,5 +16,5 @@ Credits
 
 License
 =======
-* Typing algorithm and keymap of this project are based on [xvnkb](http://xvnkb.sourceforge.net/) project written by Dao Hai Lam.
+* Key handling algorithm and keymap of this project are based on [xvnkb](http://xvnkb.sourceforge.net/) project written by Dao Hai Lam.
 * This project is distributed under the GNU GPLv3. See the file [LICENSE](https://github.com/huyphan/NAKL/blob/master/LICENSE).
