@@ -14,7 +14,6 @@
 		5158BDC81568111A00EEBAD6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5158BDC61568111A00EEBAD6 /* MainMenu.xib */; };
 		5158BDEF1568CB1800EEBAD6 /* KeyboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */; };
 		516BEA6215726BC70085B4BA /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516BEA6415726BC70085B4BA /* Preferences.xib */; };
-		5189A8BE157089B500327B99 /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5189A8BD157089B500327B99 /* PreferencePanes.framework */; };
 		5189A8DF1570CA5100327B99 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8DE1570CA5100327B99 /* PreferencesController.m */; };
 		5189A8F41570CEE400327B99 /* ShortcutRecorder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5189A8F21570CEE400327B99 /* ShortcutRecorder.strings */; };
 		5189A8F61570D81800327B99 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5189A8F51570D81800327B99 /* Carbon.framework */; };
@@ -50,7 +49,6 @@
 		516BEA6115726BA20085B4BA /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = vi; path = "vi.lproj/NAKL-Info.plist"; sourceTree = "<group>"; };
 		516BEA6315726BC70085B4BA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Preferences.xib; sourceTree = "<group>"; };
 		516BEA6515726BDD0085B4BA /* vi */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = vi; path = vi.lproj/Preferences.xib; sourceTree = "<group>"; };
-		5189A8BD157089B500327B99 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
 		5189A8DC1570C31100327B99 /* telex-standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "telex-standard.h"; sourceTree = "<group>"; };
 		5189A8DD1570CA5100327B99 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		5189A8DE1570CA5100327B99 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5189A8F61570D81800327B99 /* Carbon.framework in Frameworks */,
-				5189A8BE157089B500327B99 /* PreferencePanes.framework in Frameworks */,
 				5158BDB21568111A00EEBAD6 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,7 +111,6 @@
 		5158BDB01568111A00EEBAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5189A8BD157089B500327B99 /* PreferencePanes.framework */,
 				5158BDB11568111A00EEBAD6 /* Cocoa.framework */,
 				5158BDB31568111A00EEBAD6 /* Other Frameworks */,
 			);
