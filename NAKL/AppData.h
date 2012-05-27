@@ -17,38 +17,27 @@
  ******************************************************************************/
 
 #import <Foundation/Foundation.h>
+#import "ShortcutRecorder/SRRecorderControl.h"
+#import "CWLSynthesizeSingleton.h"
 
-#ifndef WORDSIZE
-#define WORDSIZE	32
-#endif
+#define NAKL_HOTKEY_TOGGLE 10
+#define NAKL_HOTKEY_SWITCH_METHOD 20
 
-#define BACKSPACE_BUFFER 3
+#define NAKL_KEYBOARD_METHOD @"NAKLKeyboardMethod"
+#define NAKL_LOAD_AT_LOGIN @"NAKLLoadAtLogin"
+#define NAKL_TOGGLE_HOTKEY @"NAKLToggleHotKey"
+#define NAKL_SWITCH_METHOD_HOTKEY @"NAKLSwitchMethodHotKey"
 
-@interface KeyboardHandler : NSObject {
-    int kbBLength, kbPLength;
-    int kbMethod;
-    UniChar _kbBuffer[256];
-    UniChar* kbBuffer;
-    NSArray *vowelsMap;
-    UniChar word[WORDSIZE];
+@interface AppData : NSObject {
+    NSUserDefaults *userPrefs;
+    KeyCombo toggleCombo;
+    KeyCombo switchMethodCombo;
 }
 
-@property(nonatomic, assign) UniChar* kbBuffer;
-@property(nonatomic) int kbBLength; 
-@property(nonatomic) int kbPLength;
-@property(nonatomic) int kbMethod;
-@property(nonatomic, retain) NSArray *vowelsMap;
+CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
 
--(id)init;
-- (void) mapToCharset: (ushort*) w: (int) count;
-- (int) uiGroup: (ushort) u;
-- (int) utfVnCmp: (ushort) u1: (ushort) u2;
-
-- (bool) isValidModifier: (UniChar) c: (char) key;
-- (void) append: (ushort) lastkey: (UniChar) key;
-- (void) clearBuffer;
-- (void) shiftBuffer;
-- (void) updateBuffer;
-- (int) addKey: (UniChar) key;
+@property (readwrite,assign) NSUserDefaults *userPrefs;
+@property (readwrite,assign) KeyCombo toggleCombo;
+@property (readwrite,assign) KeyCombo switchMethodCombo;
 
 @end

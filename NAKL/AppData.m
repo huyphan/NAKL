@@ -16,39 +16,14 @@
  * along with NAKL.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-#import <Foundation/Foundation.h>
+#import "AppData.h"
 
-#ifndef WORDSIZE
-#define WORDSIZE	32
-#endif
+@implementation AppData
 
-#define BACKSPACE_BUFFER 3
+@synthesize userPrefs;
+@synthesize toggleCombo;
+@synthesize switchMethodCombo;
 
-@interface KeyboardHandler : NSObject {
-    int kbBLength, kbPLength;
-    int kbMethod;
-    UniChar _kbBuffer[256];
-    UniChar* kbBuffer;
-    NSArray *vowelsMap;
-    UniChar word[WORDSIZE];
-}
-
-@property(nonatomic, assign) UniChar* kbBuffer;
-@property(nonatomic) int kbBLength; 
-@property(nonatomic) int kbPLength;
-@property(nonatomic) int kbMethod;
-@property(nonatomic, retain) NSArray *vowelsMap;
-
--(id)init;
-- (void) mapToCharset: (ushort*) w: (int) count;
-- (int) uiGroup: (ushort) u;
-- (int) utfVnCmp: (ushort) u1: (ushort) u2;
-
-- (bool) isValidModifier: (UniChar) c: (char) key;
-- (void) append: (ushort) lastkey: (UniChar) key;
-- (void) clearBuffer;
-- (void) shiftBuffer;
-- (void) updateBuffer;
-- (int) addKey: (UniChar) key;
+CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
 @end

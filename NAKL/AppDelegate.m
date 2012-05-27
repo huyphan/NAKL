@@ -17,28 +17,77 @@
  ******************************************************************************/
 
 #import "AppDelegate.h"
-#include "KeyboardHandler.h"
-#include "keymap.h"
-
-
-#define VK_MAGIC_NUMBER 536870912L // 1<<29
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize preferencesController;
+
+uint64_t controlKeys = kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl | kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskHelp;
 
 static char *separators[] = {
 	" ",										// VKM_OFF
 	" !@#$%&)|\\-{}[]:\";<>,/'`~?.^*(+=",		// VKM_VNI
-	" !@#$%&)|\\-:\";<>,/'`~?.^*(+=",			// VKM_TELEX
-	" !@#$%&)|\\-{}[]:\";<>,/"				// VKM_VIQR
+	" !@#$%&)|\\-:\";<>,/'`~?.^*(+="			// VKM_TELEX
 };
+
 
 KeyboardHandler *kbHandler;
 
 static char rk = 0;
 bool dirty;
 
+#pragma mark Initialization
+
++(void)initialize
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
+    [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
+    [defaults registerDefaults:appDefs];
+}
+
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
+{
+    preferencesController = [[PreferencesController alloc] init];
+
+    /* Read user preferences from plist */
+    [AppData sharedAppData].userPrefs = [NSUserDefaults standardUserDefaults];        
+
+    /* Update 'toggle' Hot Key */
+    NSDictionary *dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_TOGGLE_HOTKEY];
+    PTKeyCombo *keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
+    [AppData sharedAppData].toggleCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
+    [keyCombo release];
+    
+    
+    /* Update 'switch method' Hot Key */    
+    dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_SWITCH_METHOD_HOTKEY];
+    keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
+    [AppData sharedAppData].switchMethodCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
+    [keyCombo release];    
+    
+    
+    int method = [[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
+    for (id object in [statusMenu itemArray]) {
+        [(NSMenuItem*) object setState:((NSMenuItem*) object).tag == method];
+    }
+
+    kbHandler = [[KeyboardHandler alloc] init];
+    kbHandler.kbMethod = method;
+    [self performSelectorInBackground:@selector(eventLoop) withObject:nil];    
+    
+    [self updateStatusItem];
+}
+
+-(void)awakeFromNib {
+    [super awakeFromNib];    
+    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
+    [statusItem setMenu:statusMenu];
+    [statusItem setAction:@selector(menuItemClicked)];
+}
+
+#pragma mark Keyboard Handler
 
 CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
@@ -47,15 +96,14 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniChar chars[3];
     UniChar *x;
     long i;
-
-    CGEventKeyboardGetUnicodeString(event, maxStringLength, &actualStringLength, chars);
-
+    
     uint64_t flag = CGEventGetFlags(event);
     
-    if (flag == VK_MAGIC_NUMBER) {
+    if (flag == NAKL_MAGIC_NUMBER) {
         return event;
     }
 
+    CGEventKeyboardGetUnicodeString(event, maxStringLength, &actualStringLength, chars);    
     UniChar key = chars[0];    
     
     switch (type) {
@@ -66,8 +114,41 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 rk = 0;
             }
             break;
-
+            
         case kCGEventKeyDown:
+        {   
+            ushort keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+            
+            if (flag & (controlKeys)) {
+
+                if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
+                {
+                    if (kbHandler.kbMethod == VKM_OFF) {
+                        kbHandler.kbMethod = [[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
+                    } else {
+                        kbHandler.kbMethod = VKM_OFF;
+                    }
+                    
+                    [((AppDelegate*) refcon) updateStatusItem];                    
+                }
+                
+                if (((flag & controlKeys) == [AppData sharedAppData].switchMethodCombo.flags) && (keycode == [AppData sharedAppData].switchMethodCombo.code) ){
+                    if (kbHandler.kbMethod == VKM_VNI) {
+                        kbHandler.kbMethod = VKM_TELEX;
+                    } else if (kbHandler.kbMethod == VKM_TELEX) {
+                        kbHandler.kbMethod = VKM_VNI;
+                    } 
+                    
+                    if (kbHandler.kbMethod != VKM_OFF) {
+                        [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];                    
+                        [((AppDelegate*) refcon) updateStatusItem];                                        
+                    }
+                }     
+
+                [kbHandler clearBuffer];
+                break;
+            }
+            
             switch (key) {
                 case XK_Linefeed:
                 case XK_Clear:
@@ -111,21 +192,21 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                                 
                                 CGEventSetFlags(keyEventDown, CGEventGetFlags(event));
                                 CGEventSetFlags(keyEventUp, CGEventGetFlags(event));
-                                    
+                                
                                 CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
                                 CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);
-
-                                CGEventSetFlags(keyEventDown,VK_MAGIC_NUMBER);
-                                CGEventSetFlags(keyEventUp,VK_MAGIC_NUMBER);                                
-
+                                
+                                CGEventSetFlags(keyEventDown,NAKL_MAGIC_NUMBER);
+                                CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER);                                
+                                
                                 if (*x == '\b') {
                                     CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
                                     CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);
                                 }                            
-
+                                
                                 CGEventPost(kCGSessionEventTap, keyEventDown);
                                 CGEventPost(kCGSessionEventTap, keyEventUp);
-
+                                
                                 CFRelease(keyEventDown);
                                 CFRelease(keyEventUp);
                             }
@@ -134,6 +215,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     }
             }
             break;
+        }
             
         case kCGEventLeftMouseDown:
         case kCGEventRightMouseDown:            
@@ -144,7 +226,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
         default:
             break;
     }
-
+    
     return event;
 }
 
@@ -158,7 +240,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  (1 << kCGEventRightMouseDown) |
                  (1 << kCGEventOtherMouseDown)
                  );
-
+    
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
                                 eventMask, KeyHandler, self);
     if (!eventTap) {
@@ -172,8 +254,11 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     CFRunLoopRun();
 }
 
+#pragma mark GUI
+
 - (void) updateStatusItem {
-    switch (kbHandler.kbMethod) {
+    int method = kbHandler.kbMethod;
+    switch (method) {
         case VKM_VNI:
             [statusItem setTitle:@"vni"];
             break;            
@@ -183,46 +268,17 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             break;
             
         default:
-            [statusItem setTitle:@"off"];
+            [statusItem setTitle:@"en"];
             break;
     }
 }
 
--(IBAction) displayPreferences:(id)sender {
-    NSBundle *prefBundle = [NSBundle bundleWithPath: @".naklBundle"];
-    Class prefPaneClass = [prefBundle principalClass];
+-(IBAction)showPreferences:(id)sender{
+    if(!self.preferencesController)
+        self.preferencesController = [[PreferencesController alloc] initWithWindowNibName:@"Preferences"];
 
-//    NSPreferencePan *prefPaneObject = [[prefPaneClass alloc]
-//                                        initWithBundle:prefBundle];
-}
-
-
-- (void) updateApplicationData {
-    /*
-    NSArray *keys = [NSArray arrayWithObjects:@"kbMethod", @"switchingKey", nil];
-    NSArray *objects = [NSArray arrayWithObjects: [NSNumber numberWithInt:kbHandler.kbMethod], , nil];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects 
-                                                           forKeys:keys];
-     */
-}
-
-- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
-{
-    kbHandler = [[KeyboardHandler alloc] init];
-    kbHandler.kbMethod = VKM_TELEX;
-    [self updateStatusItem];
-
-    for (id object in [statusMenu itemArray]) {
-        [(NSMenuItem*) object setState:((NSMenuItem*) object).tag == kbHandler.kbMethod];
-    }    
-    
-    [self performSelectorInBackground:@selector(eventLoop) withObject:nil];
-}
-
--(void)awakeFromNib {
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
-    [statusItem setMenu:statusMenu];
-    [statusItem setAction:@selector(menuItemClicked)];
+    [self.preferencesController showWindow:self];
+    [self.preferencesController.window center];
 }
 
 - (IBAction) methodSelected:(id)sender {
@@ -231,22 +287,43 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     }
 
     [(NSMenuItem*) sender setState:NSOnState];
-    [kbHandler clearBuffer];
-    if ([[(NSMenuItem*) sender title] compare:@"VNI"] == 0) {
-        kbHandler.kbMethod = VKM_VNI;
-    } else if ([[(NSMenuItem*) sender title] compare:@"Telex"] == 0) {
-        kbHandler.kbMethod = VKM_TELEX;        
-    } else {
-        kbHandler.kbMethod = VKM_OFF;
+
+    int method;
+
+    if ([[(NSMenuItem*) sender title] compare:@"VNI"] == 0) 
+    {
+        method = VKM_VNI;
+    } 
+    else if ([[(NSMenuItem*) sender title] compare:@"Telex"] == 0) 
+    {
+        method = VKM_TELEX;
+    } 
+    else 
+    {
+        method = VKM_OFF;
     }
-    
+
+    kbHandler.kbMethod = method;
+    if (method != VKM_OFF) 
+    {
+        [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:method] forKey:NAKL_KEYBOARD_METHOD];
+    }
+
     [self updateStatusItem];
 }
 
-- (IBAction) quit:(id)sender {
+#pragma mark -
+
+- (IBAction) quit:(id)sender 
+{
     CFRunLoopRef rl = (CFRunLoopRef)CFRunLoopGetCurrent();
     CFRunLoopStop(rl);
     [NSApp terminate:self];
+}
+
+- (void)dealloc {
+    [preferencesController release];
+    [super dealloc];
 }
 
 @end

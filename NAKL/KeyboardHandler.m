@@ -68,8 +68,6 @@ int tempoff = 0;
         }
     }
 
-    self.kbMethod = VKM_VNI;
-
     UniChar groupA[] = {   
         utf_a,  utf_a1,  utf_a2,  utf_a3,  utf_a4,  utf_a5,
         utf_a6, utf_a61, utf_a62, utf_a63, utf_a64, utf_a65,
@@ -442,7 +440,6 @@ int tempoff = 0;
     /* Try to prevent modifying long words (probably when typing foreign language)
        TODO: this code is *hacky*, it need to be replaced by a proper spellcheck.
      */
-    NSLog(@"%d",p-i);
     if (p - i > BACKSPACE_BUFFER) {
         [self append:c:key];
         return -1;        

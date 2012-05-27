@@ -18,8 +18,21 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "ShortcutRecorder/SRRecorderControl.h"
+#import "PreferencesController.h"
+#import "KeyboardHandler.h"
+#import "PTHotKey.h"
+#import "AppData.h"
+#import "keymap.h"
+
+#define NAKL_MAGIC_NUMBER 536870912L // 1<<29
+
+typedef enum {
+    VKM_OFF, VKM_VNI, VKM_TELEX
+} NAKL_METHOD;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
+    PreferencesController *preferencesController; 
     NSWindow *_window;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;    
@@ -27,9 +40,13 @@
     NSImage *statusHighlightImage;   
 }
 
++ (void)initialize;
 - (IBAction) methodSelected:(id)sender;
 - (IBAction) quit:(id)sender;
+- (IBAction) showPreferences:(id)sender;
+- (void) updateStatusItem;
 
 @property (assign) IBOutlet NSWindow *window;
+@property (retain) PreferencesController *preferencesController;
 
 @end
