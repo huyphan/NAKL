@@ -406,15 +406,14 @@ int tempoff = 0;
         return -1;
     }
         
-    /* If there's any character that can match with current key, we modify it first  */
+    /* If there's other character that can match with current key, we modify it first  */
     while ( (i-1 >= 0) &&
            (strchr(vowels, word[i-1]) || (word[i-1] > 0x80) ) 
-            && ([self utfVnCmp:word[i-1]:word[i]] < 0) 
             && [self isValidModifier:word[i-1]:key] 
            ) {
         i--;
     }
-  
+
     if( i == count-1 && i-1 >= 0 &&	(j = [self uiGroup:word[i-1]]) > 0 )
     {
         switch( word[i] ) {
@@ -440,7 +439,7 @@ int tempoff = 0;
     /* Try to prevent modifying long words (probably when typing foreign language)
        TODO: this code is *hacky*, it need to be replaced by a proper spellcheck.
      */
-    if (p - i > BACKSPACE_BUFFER) {
+    if (p - i >= BACKSPACE_BUFFER) {
         [self append:c:key];
         return -1;        
     }
