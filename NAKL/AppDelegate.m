@@ -120,7 +120,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             ushort keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
             
             if (flag & (controlKeys)) {
-
                 if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
                 {
                     if (kbHandler.kbMethod == VKM_OFF) {
@@ -148,7 +147,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 [kbHandler clearBuffer];
                 break;
             }
-            
+            /* TODO: Use keycode instead of value of character */
             switch (key) {
                 case XK_Linefeed:
                 case XK_Clear:
@@ -158,8 +157,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 case XK_Up:
                 case XK_Right:
                 case XK_Down:
-                case XK_Page_Up:
-                case XK_Page_Down:
                 case XK_End:
                 case XK_Begin:
                 case XK_Tab:
@@ -172,13 +169,12 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     if (kbHandler.kbMethod == VKM_OFF) {
                         break;
                     }
-                    
                     char *sp = strchr(separators[kbHandler.kbMethod], key);
                     if (sp) {
                         [kbHandler clearBuffer];
                         break;
                     }
-                    
+
                     switch( i = [kbHandler addKey:key] ) {
                         case -1:
                             
