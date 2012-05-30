@@ -409,6 +409,7 @@ int tempoff = 0;
     /* If there's other character that can match with current key, we modify it first  */
     while ( (i-1 >= 0) &&
            (strchr(vowels, word[i-1]) || (word[i-1] > 0x80) ) 
+            && ([self utfVnCmp:word[i-1]:word[i]] < 0)            
             && [self isValidModifier:word[i-1]:key] 
            ) {
         i--;
@@ -423,7 +424,7 @@ int tempoff = 0;
                                 (
                       (j < 24 && word[i-2] != chr_q && word[i-2] != chr_Q) ||
                       (j > 24 && word[i-2] != chr_g && word[i-2] != chr_G) 
-                                ) && [self isValidModifier:word[i-2]:key] 
+                                )
                         )
                    )
 					i = i - 1;
@@ -435,7 +436,7 @@ int tempoff = 0;
 				break;
             }
     }
-        
+
     /* Try to prevent modifying long words (probably when typing foreign language)
        TODO: this code is *hacky*, it need to be replaced by a proper spellcheck.
      */
