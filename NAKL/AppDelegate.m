@@ -185,29 +185,28 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                             for (i = 0;i<kbHandler.kbBLength + kbHandler.kbPLength;i++,x++) {
                                 CGEventRef keyEventDown = CGEventCreateKeyboardEvent( NULL, 1, true);
                                 CGEventRef keyEventUp = CGEventCreateKeyboardEvent(NULL, 1, false);                            
+                                 
+                                int flag = CGEventGetFlags(keyEventDown);
+                                CGEventSetFlags(keyEventDown, NAKL_MAGIC_NUMBER | flag);
                                 
-                                CGEventSetFlags(keyEventDown, CGEventGetFlags(event));
-                                CGEventSetFlags(keyEventUp, CGEventGetFlags(event));
-                                
-                                CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
-                                CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);
-                                
-                                CGEventSetFlags(keyEventDown,NAKL_MAGIC_NUMBER);
-                                CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER);                                
+                                flag = CGEventGetFlags(keyEventUp);
+                                CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER | flag);                                
                                 
                                 if (*x == '\b') {
                                     CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
-                                    CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);
-                                }                            
+                                    CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);                                    
+                                } else {
+                                    CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
+                                    CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);                                    
+                                }
                                 
-                                CGEventPost(kCGSessionEventTap, keyEventDown);
-                                CGEventPost(kCGSessionEventTap, keyEventUp);
+                                CGEventPost(kCGAnnotatedSessionEventTap, keyEventDown);
+                                CGEventPost(kCGAnnotatedSessionEventTap, keyEventUp);
                                 
                                 CFRelease(keyEventDown);
                                 CFRelease(keyEventUp);
                             }
-                            return NULL;
-                            break;            
+                            return NULL;  
                     }
             }
             break;
