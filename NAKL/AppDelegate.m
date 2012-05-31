@@ -272,6 +272,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     if(!self.preferencesController)
         self.preferencesController = [[PreferencesController alloc] initWithWindowNibName:@"Preferences"];
 
+    [NSApp activateIgnoringOtherApps:YES];
     [self.preferencesController showWindow:self];
     [self.preferencesController.window center];
 }
