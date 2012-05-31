@@ -377,11 +377,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CURRENT_PROJECT_VERSION = 36;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = NAKL;
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -391,11 +393,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CURRENT_PROJECT_VERSION = 36;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = NAKL;
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

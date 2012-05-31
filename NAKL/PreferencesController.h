@@ -13,10 +13,12 @@
 @interface PreferencesController : NSWindowController {
     SRRecorderControl *_toggleHotKey;
     SRRecorderControl *_switchMethodHotKey;    
+    NSString *versionString;
 }
 
 @property (nonatomic, readwrite, retain) IBOutlet SRRecorderControl *toggleHotKey;
 @property (nonatomic, readwrite, retain) IBOutlet SRRecorderControl *switchMethodHotKey;
+@property (nonatomic, readwrite, retain) NSString *versionString;
 
 - (IBAction) startupOptionClick:(id)sender;
 

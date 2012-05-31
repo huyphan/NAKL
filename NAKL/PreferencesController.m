@@ -15,10 +15,16 @@
 
 @synthesize toggleHotKey = _toggleHotKey;
 @synthesize switchMethodHotKey = _switchMethodHotKey;
+@synthesize versionString;
 
 -(id)init {
     if (![super initWithWindowNibName:@"Preferences"])
         return nil;
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    NSString *buildNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+
+    self.versionString = [NSString stringWithFormat:@"Version %@ (build %@)", version, buildNumber];
     
     return self;
 }
