@@ -16,6 +16,7 @@
 @synthesize toggleHotKey = _toggleHotKey;
 @synthesize switchMethodHotKey = _switchMethodHotKey;
 @synthesize versionString;
+@synthesize shortcuts;
 
 -(id)init {
     if (![super initWithWindowNibName:@"Preferences"])
@@ -25,7 +26,7 @@
     NSString *buildNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
 
     self.versionString = [NSString stringWithFormat:@"Version %@ (build %@)", version, buildNumber];
-    
+
     return self;
 }
 
@@ -33,6 +34,8 @@
     [super windowDidLoad];
     [self.toggleHotKey setKeyCombo: [AppData sharedAppData].toggleCombo];    
     [self.switchMethodHotKey setKeyCombo: [AppData sharedAppData].switchMethodCombo];
+    
+    [self.shortcuts setContent:[AppData sharedAppData].shortcuts];
 }
 
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
@@ -108,5 +111,13 @@
         [self removeAppFromLoginItem];
     }
 }
+
+- (void) saveSetting
+{
+    NSString *filePath = [self getShortcutSettingsFullFilePath:@"shorcuts"];
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:[AppData sharedAppData].shortcuts];
+    [NSKeyedArchiver archiveRootObject:theData toFile:filePath]; 
+}
+
 
 @end

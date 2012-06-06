@@ -17,13 +17,47 @@
  ******************************************************************************/
 
 #import "AppData.h"
+#import "PTHotKey.h"
 
 @implementation AppData
 
 @synthesize userPrefs;
 @synthesize toggleCombo;
 @synthesize switchMethodCombo;
+@synthesize shortcuts;
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
+
++ (void) loadUserPrefs
+{
+    [AppData sharedAppData].userPrefs = [NSUserDefaults standardUserDefaults];           
+}
+
++ (void) loadHotKeys
+{
+    NSDictionary *dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_TOGGLE_HOTKEY];
+    PTKeyCombo *keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
+    [AppData sharedAppData].toggleCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
+    [keyCombo release];
+    
+    dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_SWITCH_METHOD_HOTKEY];
+    keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
+    [AppData sharedAppData].switchMethodCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
+    [keyCombo release];    
+}
+
++ (void) loadShortcuts
+{
+    NSString *filePath = [self getShortcutSettingsFullFilePath:@"shorcuts"];
+    [AppData sharedAppData].shortcuts = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];         
+}
+
++ (NSString*) getShortcutSettingsFullFilePath:(NSString*)name
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *savePath = [paths objectAtIndex:0];
+    NSString *theFileName = [NSString stringWithFormat:@"%@.setting", name];   
+    return [savePath stringByAppendingPathComponent: theFileName];
+}
 
 @end

@@ -51,22 +51,9 @@ bool dirty;
 {
     preferencesController = [[PreferencesController alloc] init];
 
-    /* Read user preferences from plist */
-    [AppData sharedAppData].userPrefs = [NSUserDefaults standardUserDefaults];        
-
-    /* Update 'toggle' Hot Key */
-    NSDictionary *dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_TOGGLE_HOTKEY];
-    PTKeyCombo *keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
-    [AppData sharedAppData].toggleCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
-    [keyCombo release];
-    
-    
-    /* Update 'switch method' Hot Key */    
-    dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_SWITCH_METHOD_HOTKEY];
-    keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
-    [AppData sharedAppData].switchMethodCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
-    [keyCombo release];    
-    
+    [AppData loadUserPrefs];
+    [AppData loadHotKeys];
+    [AppData loadShortcuts];
     
     int method = [[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
     for (id object in [statusMenu itemArray]) {
@@ -98,14 +85,14 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     long i;
     
     uint64_t flag = CGEventGetFlags(event);
-    
-    if (flag == NAKL_MAGIC_NUMBER) {
+
+    if (flag & NAKL_MAGIC_NUMBER) {
         return event;
     }
 
     CGEventKeyboardGetUnicodeString(event, maxStringLength, &actualStringLength, chars);    
     UniChar key = chars[0];    
-    
+
     switch (type) {
         case kCGEventKeyUp:
             if (rk == key) {
@@ -118,7 +105,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
         case kCGEventKeyDown:
         {   
             ushort keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-            
+ 
             if (flag & (controlKeys)) {
                 if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
                 {
@@ -147,6 +134,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 [kbHandler clearBuffer];
                 break;
             }
+
             /* TODO: Use keycode instead of value of character */
             switch (key) {
                 case XK_Linefeed:
@@ -181,11 +169,12 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                             break;
                             
                         default:
+                        {
                             x = kbHandler.kbBuffer+BACKSPACE_BUFFER-kbHandler.kbPLength;
                             for (i = 0;i<kbHandler.kbBLength + kbHandler.kbPLength;i++,x++) {
                                 CGEventRef keyEventDown = CGEventCreateKeyboardEvent( NULL, 1, true);
                                 CGEventRef keyEventUp = CGEventCreateKeyboardEvent(NULL, 1, false);                            
-                                 
+
                                 int flag = CGEventGetFlags(keyEventDown);
                                 CGEventSetFlags(keyEventDown, NAKL_MAGIC_NUMBER | flag);
                                 
@@ -199,14 +188,15 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                                     CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
                                     CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);                                    
                                 }
-                                
-                                CGEventPost(kCGAnnotatedSessionEventTap, keyEventDown);
-                                CGEventPost(kCGAnnotatedSessionEventTap, keyEventUp);
+
+                                CGEventTapPostEvent(proxy, keyEventDown);
+                                CGEventTapPostEvent(proxy, keyEventUp);                                
                                 
                                 CFRelease(keyEventDown);
                                 CFRelease(keyEventUp);
                             }
                             return NULL;  
+                        }
                     }
             }
             break;
