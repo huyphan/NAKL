@@ -57,6 +57,7 @@ int vpc = 0;
 int vps[WORDSIZE];
 char lvs[WORDSIZE];
 int tempoff = 0;
+bool hasVowel = false;
 
 -(id)init
 {
@@ -125,7 +126,7 @@ int tempoff = 0;
         0
     };
 
-    self.vowelsMap = [NSArray arrayWithObjects:[NSString stringWithCharacters:groupA length:sizeof(groupA)],
+    self.vowelsMap = [NSArray arrayWithObjects:[NSString stringWithCharacters:groupA length:sizeof(groupA)/sizeof(UniChar)],
                  [NSString stringWithCharacters:groupE length:sizeof(groupE)/sizeof(UniChar)], 
                  [NSString stringWithCharacters:groupI length:sizeof(groupI)/sizeof(UniChar)], 
                  [NSString stringWithCharacters:groupO length:sizeof(groupO)/sizeof(UniChar)], 
@@ -247,9 +248,10 @@ int tempoff = 0;
 //----------------------------------------------------------------------------
 - (void) clearBuffer 
 {
-    kbOff = 0;
+    tempoff = 0;
     count = 0;
     *word = 0;
+    hasVowel = NO;
     //    Speller.Clear();
 }
 
@@ -286,7 +288,7 @@ int tempoff = 0;
                 vpc = 0;
             }
     }
-    else
+    else {
         if( kp==12 || kp>37 ) {
             [self clearBuffer];
             return;
@@ -296,6 +298,15 @@ int tempoff = 0;
                 tempoff = count;
             else
                 if( kp>=0 ) { // vowels
+                    if (!hasVowel) {
+                        hasVowel = YES;
+                    } else {
+                        char *lsp = strchr(spchk, (char) lastkey);                        
+                        int lkp = sp ? (lsp - spchk) : -1;
+                        if ( (lastkey < 127) && (lkp > 12) && (lkp < 37) ) {
+                            tempoff = count;
+                        }
+                    }
                     if( vp<0 ) {
                         vps[vpc++] = vp;
                         vp = count;
@@ -341,6 +352,7 @@ int tempoff = 0;
                                 tempoff = count;
                             break;
                     }
+    }
 	word[count++] = (ushort)key;
 }
 
@@ -351,13 +363,13 @@ int tempoff = 0;
         key += 32;
     }
     char* p;
-
     if ( (p = strchr(m, key)) == NULL) {
         return NULL;
     }
 
-    for (id s in vowelsMap) {
-        if ([(NSString*) s rangeOfString:[NSString stringWithCharacters:&c length:1]].location != NSNotFound) {
+    for (NSString* s in vowelsMap) {
+        NSString *cString = [NSString stringWithCharacters:&c length:1];
+        if ([s rangeOfString:cString].location != NSNotFound) {
             ushort v = modifiersMap[self.kbMethod - 1][strchr(modifiedChars,[(NSString*) s characterAtIndex:0]) - modifiedChars];
             return 1L&(v>>(p-m));
         }
@@ -376,7 +388,7 @@ int tempoff = 0;
 	modifier_t *m = modes[ self.kbMethod - 1 ];
     vietcode_t *v = NULL;
 
-	if( !count || kbOff ) {
+	if( !count || tempoff ) {
         [self append:c:key];
         return -1;
     }
@@ -397,6 +409,7 @@ int tempoff = 0;
     i = p;
 
     /* Loop back to search for the closest character that can match with current key */
+
     while ((i >= 0) && ![self isValidModifier:word[i]:key] ) {
         i--;
     }
@@ -420,6 +433,7 @@ int tempoff = 0;
         switch( word[i] ) {
 			case chr_a:
 			case chr_A:
+                
 				if( i-2 < 0 || (
                                 (
                       (j < 24 && word[i-2] != chr_q && word[i-2] != chr_Q) ||
@@ -447,7 +461,6 @@ int tempoff = 0;
     
     c = word[p = i];   
 
-
     for( i = 0; (cc = v[i].c) != 0 && c != cc; i++ );
     
 	if( !cc ) {
@@ -461,12 +474,11 @@ int tempoff = 0;
 		backup[ p ] = c;
 	}
 	else {
-		word[ kbOff = count++ ] = (ushort)key;
+		word[ tempoff = count++ ] = (ushort)key;
 		word[ p ] = backup[ p ];
 	}
     
     [self mapToCharset:&word[p]:count-p];
-
 	return p;
 }
 
