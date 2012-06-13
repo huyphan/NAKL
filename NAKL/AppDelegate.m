@@ -22,6 +22,7 @@
 
 @synthesize window = _window;
 @synthesize preferencesController;
+@synthesize eventTap;
 
 uint64_t controlKeys = kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl | kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskHelp;
 
@@ -83,7 +84,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniChar chars[3];
     UniChar *x;
     long i;
-    
+
     uint64_t flag = CGEventGetFlags(event);
 
     if (flag & NAKL_MAGIC_NUMBER) {
@@ -101,11 +102,15 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 rk = 0;
             }
             break;
-            
+
+		case kCGEventTapDisabledByTimeout:
+			CGEventTapEnable(((AppDelegate*) refcon).eventTap , TRUE);
+			break;            
+
         case kCGEventKeyDown:
         {   
             ushort keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
- 
+
             if (flag & (controlKeys)) {
                 if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
                 {
@@ -133,8 +138,8 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 
                 [kbHandler clearBuffer];
                 break;
-            }
-
+            } 
+ 
             /* TODO: Use keycode instead of value of character */
             switch (key) {
                 case XK_Linefeed:
@@ -216,7 +221,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 }
 
 - (void) eventLoop {
-    CFMachPortRef      eventTap;
     CGEventMask        eventMask;
     CFRunLoopSourceRef runLoopSource;
     
@@ -226,7 +230,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  (1 << kCGEventOtherMouseDown)
                  );
     
-    eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
+    eventTap = CGEventTapCreate(kCGAnnotatedSessionEventTap, kCGHeadInsertEventTap, 0,
                                 eventMask, KeyHandler, self);
     if (!eventTap) {
         fprintf(stderr, "failed to create event tap\n");

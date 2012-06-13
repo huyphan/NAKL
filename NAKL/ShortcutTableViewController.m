@@ -9,6 +9,7 @@
 #import "ShortcutTableViewController.h"
 #import "AppData.h"
 #import "ShortcutSetting.h"
+#import "NSFileManager+DirectoryLocations.h"
 
 @implementation ShortcutTableViewController
 
@@ -16,28 +17,52 @@
 {
     self = [super init];
     if (self) {
-        list = [[NSMutableArray alloc] init];
         [tableView usesAlternatingRowBackgroundColors];
     }
     return self;
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [list count];
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView 
+{
+    return [[AppData sharedAppData].shortcuts count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    ShortcutSetting *p = [list objectAtIndex:row];
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row 
+{
+    ShortcutSetting *p = [[AppData sharedAppData].shortcuts objectAtIndex:row];
     NSString *identifier = [tableColumn identifier];
     return [p valueForKey:identifier];
 }
 
-- (IBAction)add:(id)sender {
+- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    ShortcutSetting *s = [[AppData sharedAppData].shortcuts objectAtIndex:row];
+    NSString *identifier = [tableColumn identifier];
+    [s setValue:object forKey:identifier];
+}
+
+- (IBAction)add:(id)sender 
+{
     ShortcutSetting *shortcut = [[ShortcutSetting alloc] init];
-    [list addObject:shortcut];
+    [[AppData sharedAppData].shortcuts addObject:shortcut];
     [tableView reloadData];
-    [tableView editColumn:0 row:([list count] - 1) withEvent:nil select:YES];
+    [tableView editColumn:0 row:([[AppData sharedAppData].shortcuts count] - 1) withEvent:nil select:YES];
     [shortcut release];
+}
+
+- (IBAction)remove:(id)sender 
+{
+    NSInteger row = [tableView selectedRow];
+    [tableView abortEditing];
+    if (row != -1) {
+        [[AppData sharedAppData].shortcuts removeObjectAtIndex:row];
+    }
+    [tableView reloadData];
+}
+
+- (void) dealloc 
+{
+    [super dealloc];
 }
 
 @end

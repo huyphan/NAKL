@@ -18,6 +18,7 @@
 
 #import "AppData.h"
 #import "PTHotKey.h"
+#import "NSFileManager+DirectoryLocations.h"
 
 @implementation AppData
 
@@ -48,16 +49,21 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
 + (void) loadShortcuts
 {
-    NSString *filePath = [self getShortcutSettingsFullFilePath:@"shorcuts"];
-    [AppData sharedAppData].shortcuts = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];         
-}
-
-+ (NSString*) getShortcutSettingsFullFilePath:(NSString*)name
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *savePath = [paths objectAtIndex:0];
-    NSString *theFileName = [NSString stringWithFormat:@"%@.setting", name];   
-    return [savePath stringByAppendingPathComponent: theFileName];
+    NSString *filePath = [[[NSFileManager defaultManager] applicationSupportDirectory] stringByAppendingPathComponent:@"shortcuts.setting"];
+    NSData *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+    if (data != nil) 
+    {
+        NSArray *savedArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (savedArray != nil) 
+        {
+            [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] initWithArray:savedArray];
+        } else
+        {
+            [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] init];        
+        }
+    } else {
+        [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] init];
+    }
 }
 
 @end

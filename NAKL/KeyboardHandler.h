@@ -22,7 +22,7 @@
 #define WORDSIZE	32
 #endif
 
-#define BACKSPACE_BUFFER 4
+#define BACKSPACE_BUFFER 20
 
 @interface KeyboardHandler : NSObject {
     int kbBLength, kbPLength;

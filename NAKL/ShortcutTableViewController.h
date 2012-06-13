@@ -10,9 +10,11 @@
 
 @interface ShortcutTableViewController : NSObject <NSTableViewDataSource> {
     IBOutlet NSTableView *tableView;
-    NSMutableArray *list;
 }
 
+@property (readwrite,assign) NSMutableArray *list;
+
 - (IBAction) add:(id)sender;
+- (IBAction) remove:(id)sender;
 
 @end

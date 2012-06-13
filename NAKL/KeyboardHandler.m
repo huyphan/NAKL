@@ -58,6 +58,7 @@ int vps[WORDSIZE];
 char lvs[WORDSIZE];
 int tempoff = 0;
 bool hasVowel = false;
+bool hasSpacebar = false;
 
 -(id)init
 {
@@ -384,10 +385,9 @@ bool hasVowel = false;
     int i, j = -1;
     ushort c = 0;
     ushort cc;
-
 	modifier_t *m = modes[ self.kbMethod - 1 ];
     vietcode_t *v = NULL;
-
+     
 	if( !count || tempoff ) {
         [self append:c:key];
         return -1;
@@ -480,6 +480,10 @@ bool hasVowel = false;
     
     [self mapToCharset:&word[p]:count-p];
 	return p;
+}
+
+- (void) dealloc {
+    [super dealloc];
 }
 
 @end

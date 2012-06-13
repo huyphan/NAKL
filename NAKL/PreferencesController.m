@@ -10,6 +10,7 @@
 #import "ShortcutRecorder/SRRecorderControl.h"
 #import "PTHotKeyCenter.h"
 #import "PTHotKey.h"
+#import "NSFileManager+DirectoryLocations.h"
 
 @implementation PreferencesController
 
@@ -36,6 +37,11 @@
     [self.switchMethodHotKey setKeyCombo: [AppData sharedAppData].switchMethodCombo];
     
     [self.shortcuts setContent:[AppData sharedAppData].shortcuts];
+}
+
+- (void)windowWillClose :(NSNotification *)notification
+{
+    [self saveSetting];
 }
 
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
@@ -114,10 +120,14 @@
 
 - (void) saveSetting
 {
-    NSString *filePath = [self getShortcutSettingsFullFilePath:@"shorcuts"];
+    NSString *filePath = [[[NSFileManager defaultManager] applicationSupportDirectory] stringByAppendingPathComponent:@"shortcuts.setting"];
     NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:[AppData sharedAppData].shortcuts];
-    [NSKeyedArchiver archiveRootObject:theData toFile:filePath]; 
+    [NSKeyedArchiver archiveRootObject:theData toFile:filePath];
 }
 
+- (void) dealloc {
+    [shortcutsTableView release];
+    [super dealloc];
+}
 
 @end

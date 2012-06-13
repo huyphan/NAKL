@@ -38,6 +38,7 @@ typedef enum {
     NSStatusItem * statusItem;    
     NSImage *statusImage;
     NSImage *statusHighlightImage;   
+    CFMachPortRef      eventTap;    
 }
 
 + (void)initialize;
@@ -47,6 +48,7 @@ typedef enum {
 - (void) updateStatusItem;
 
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) CFMachPortRef eventTap;    
 @property (retain) PreferencesController *preferencesController;
 
 @end
