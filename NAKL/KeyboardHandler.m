@@ -448,7 +448,7 @@ bool hasSpaceBar = false;
         [self append:c:key];
         return -1;
     }
-        
+
     /* If there's other character that can match with current key, we modify it first  */
     while ( (i-1 >= 0) &&
            (strchr(vowels, word[i-1]) || (word[i-1] > 0x80) ) 
@@ -462,19 +462,19 @@ bool hasSpaceBar = false;
         switch( word[i] ) {
 			case chr_a:
 			case chr_A:
-                
-				if( i-2 < 0 || (
+
+				if (( i-2 < 0 || (
                                 (
                       (j < 24 && word[i-2] != chr_q && word[i-2] != chr_Q) ||
                       (j > 24 && word[i-2] != chr_g && word[i-2] != chr_G) 
                                 )
                         )
-                   )
+                   ) && [self isValidModifier:word[i-1]:key] )
 					i = i - 1;
 				break;
 			case chr_u:
             case chr_U:
-                if( i-2 < 0 ||  (word[i-2] != chr_g && word[i-2] != chr_G) )
+                if( i-2 < 0 ||  (word[i-2] != chr_g && word[i-2] != chr_G) ) 
                     i = i - 1;
 				break;
             }

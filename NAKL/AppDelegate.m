@@ -185,7 +185,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                                 
                                 flag = CGEventGetFlags(keyEventUp);
                                 CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER | flag);                                
-                                
                                 if (*x == '\b') {
                                     CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
                                     CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);                                    
@@ -230,7 +229,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  (1 << kCGEventOtherMouseDown)
                  );
     
-    eventTap = CGEventTapCreate(kCGAnnotatedSessionEventTap, kCGHeadInsertEventTap, 0,
+    eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
                                 eventMask, KeyHandler, self);
     if (!eventTap) {
         fprintf(stderr, "failed to create event tap\n");
