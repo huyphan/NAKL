@@ -27,11 +27,10 @@
 uint64_t controlKeys = kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl | kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskHelp;
 
 static char *separators[] = {
-	" ",										// VKM_OFF
-	" !@#$%&)|\\-{}[]:\";<>,/'`~?.^*(+=",		// VKM_VNI
-	" !@#$%&)|\\-:\";<>,/'`~?.^*(+="			// VKM_TELEX
+	"",										// VKM_OFF
+	"!@#$%&)|\\-{}[]:\";<>,/'`~?.^*(+=",		// VKM_VNI
+	"!@#$%&)|\\-:\";<>,/'`~?.^*(+="			// VKM_TELEX
 };
-
 
 KeyboardHandler *kbHandler;
 
@@ -162,6 +161,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     if (kbHandler.kbMethod == VKM_OFF) {
                         break;
                     }
+
                     char *sp = strchr(separators[kbHandler.kbMethod], key);
                     if (sp) {
                         [kbHandler clearBuffer];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51151930157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */; };
+		5147E45A15791D5A00932040 /* ShortcutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5147E45915791D5A00932040 /* ShortcutTableViewController.m */; };
 		5158BDB21568111A00EEBAD6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5158BDB11568111A00EEBAD6 /* Cocoa.framework */; };
 		5158BDBC1568111A00EEBAD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5158BDBA1568111A00EEBAD6 /* InfoPlist.strings */; };
 		5158BDBE1568111A00EEBAD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5158BDBD1568111A00EEBAD6 /* main.m */; };
@@ -27,9 +29,14 @@
 		5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91115711B7F00327B99 /* PTKeyCodeTranslator.m */; };
 		5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91315711B7F00327B99 /* PTKeyCombo.m */; };
 		5189A9221571CC2200327B99 /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9211571CC2200327B99 /* AppData.m */; };
+		51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8A4DB1577D41900D42909 /* ShortcutSetting.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
+		5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		5147E45815791D5A00932040 /* ShortcutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutTableViewController.h; sourceTree = "<group>"; };
+		5147E45915791D5A00932040 /* ShortcutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutTableViewController.m; sourceTree = "<group>"; };
 		5158BDAD1568111A00EEBAD6 /* NAKL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NAKL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5158BDB11568111A00EEBAD6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5158BDB41568111A00EEBAD6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -75,6 +82,8 @@
 		5189A9201571CC2200327B99 /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		5189A9211571CC2200327B99 /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		5189A9231571CD6D00327B99 /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
+		51F8A4DA1577D41900D42909 /* ShortcutSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutSetting.h; sourceTree = "<group>"; };
+		51F8A4DB1577D41900D42909 /* ShortcutSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutSetting.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,10 +99,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5115192D157FA037003D3BB4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */,
+				5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		5158BDA21568111A00EEBAD6 = {
 			isa = PBXGroup;
 			children = (
-				5189A8F51570D81800327B99 /* Carbon.framework */,
 				5158BDB71568111A00EEBAD6 /* NAKL */,
 				5158BDB01568111A00EEBAD6 /* Frameworks */,
 				5158BDAE1568111A00EEBAD6 /* Products */,
@@ -111,6 +128,7 @@
 		5158BDB01568111A00EEBAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5189A8F51570D81800327B99 /* Carbon.framework */,
 				5158BDB11568111A00EEBAD6 /* Cocoa.framework */,
 				5158BDB31568111A00EEBAD6 /* Other Frameworks */,
 			);
@@ -130,23 +148,12 @@
 		5158BDB71568111A00EEBAD6 /* NAKL */ = {
 			isa = PBXGroup;
 			children = (
+				5115192D157FA037003D3BB4 /* Utils */,
+				51F8A4DF1578FDD200D42909 /* Resources */,
+				51F8A4DE1578FDBE00D42909 /* Classes */,
 				5189A90B15711B5600327B99 /* HotKey */,
 				5189A8FB1570EC9900327B99 /* ShortcutRecorder */,
-				5158BDC31568111A00EEBAD6 /* AppDelegate.h */,
-				5158BDED1568CB1800EEBAD6 /* KeyboardHandler.h */,
-				5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */,
-				5158BDC41568111A00EEBAD6 /* AppDelegate.m */,
-				5158BDC61568111A00EEBAD6 /* MainMenu.xib */,
 				5158BDB81568111A00EEBAD6 /* Supporting Files */,
-				5158BDE51568A6EB00EEBAD6 /* utf.h */,
-				5189A8DC1570C31100327B99 /* telex-standard.h */,
-				5158BDEC1568A78800EEBAD6 /* keymap.h */,
-				516BEA6415726BC70085B4BA /* Preferences.xib */,
-				5189A8DD1570CA5100327B99 /* PreferencesController.h */,
-				5189A8DE1570CA5100327B99 /* PreferencesController.m */,
-				5189A9201571CC2200327B99 /* AppData.h */,
-				5189A9211571CC2200327B99 /* AppData.m */,
-				5189A9231571CD6D00327B99 /* CWLSynthesizeSingleton.h */,
 			);
 			path = NAKL;
 			sourceTree = "<group>";
@@ -193,6 +200,38 @@
 				5189A91315711B7F00327B99 /* PTKeyCombo.m */,
 			);
 			name = HotKey;
+			sourceTree = "<group>";
+		};
+		51F8A4DE1578FDBE00D42909 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5189A9201571CC2200327B99 /* AppData.h */,
+				5189A9211571CC2200327B99 /* AppData.m */,
+				5158BDC31568111A00EEBAD6 /* AppDelegate.h */,
+				5158BDC41568111A00EEBAD6 /* AppDelegate.m */,
+				5189A9231571CD6D00327B99 /* CWLSynthesizeSingleton.h */,
+				5158BDED1568CB1800EEBAD6 /* KeyboardHandler.h */,
+				5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */,
+				5158BDEC1568A78800EEBAD6 /* keymap.h */,
+				5189A8DD1570CA5100327B99 /* PreferencesController.h */,
+				5189A8DE1570CA5100327B99 /* PreferencesController.m */,
+				51F8A4DA1577D41900D42909 /* ShortcutSetting.h */,
+				51F8A4DB1577D41900D42909 /* ShortcutSetting.m */,
+				5189A8DC1570C31100327B99 /* telex-standard.h */,
+				5158BDE51568A6EB00EEBAD6 /* utf.h */,
+				5147E45815791D5A00932040 /* ShortcutTableViewController.h */,
+				5147E45915791D5A00932040 /* ShortcutTableViewController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		51F8A4DF1578FDD200D42909 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5158BDC61568111A00EEBAD6 /* MainMenu.xib */,
+				516BEA6415726BC70085B4BA /* Preferences.xib */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +313,9 @@
 				5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */,
 				5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */,
 				5189A9221571CC2200327B99 /* AppData.m in Sources */,
+				51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */,
+				5147E45A15791D5A00932040 /* ShortcutTableViewController.m in Sources */,
+				51151930157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +419,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
@@ -393,7 +435,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";

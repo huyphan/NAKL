@@ -33,6 +33,7 @@
     KeyCombo toggleCombo;
     KeyCombo switchMethodCombo;
     NSMutableArray *shortcuts;
+    NSMutableDictionary *shortcutDictionary;
 }
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
@@ -41,6 +42,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
 @property (readwrite,assign) KeyCombo toggleCombo;
 @property (readwrite,assign) KeyCombo switchMethodCombo;
 @property (readwrite,assign) NSMutableArray *shortcuts;
+@property (readwrite,assign) NSMutableDictionary *shortcutDictionary;
 
 + (void) loadUserPrefs;
 + (void) loadHotKeys;

@@ -123,6 +123,11 @@
     NSString *filePath = [[[NSFileManager defaultManager] applicationSupportDirectory] stringByAppendingPathComponent:@"shortcuts.setting"];
     NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:[AppData sharedAppData].shortcuts];
     [NSKeyedArchiver archiveRootObject:theData toFile:filePath];
+    
+    [[AppData sharedAppData].shortcutDictionary removeAllObjects];
+    for (ShortcutSetting *s in [AppData sharedAppData].shortcuts) {
+        [[AppData sharedAppData].shortcutDictionary setObject:s.text forKey:s.shortcut];
+    }    
 }
 
 - (void) dealloc {

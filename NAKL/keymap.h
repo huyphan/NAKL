@@ -37,6 +37,7 @@
 #define XK_Scroll_Lock		0x14
 #define XK_Sys_Req		0x15
 #define XK_Escape		0x1B
+#define XK_SpaceBar     0x20
 #define XK_Delete		0xFF	/* Delete, rubout */
 
 /* Cursor control & motion */

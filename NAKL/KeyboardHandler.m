@@ -19,6 +19,8 @@
 
 #import "KeyboardHandler.h"
 #import "utf.h"
+#import "AppData.h"
+#import "keymap.h"
 
 @implementation KeyboardHandler
 
@@ -58,14 +60,12 @@ int vps[WORDSIZE];
 char lvs[WORDSIZE];
 int tempoff = 0;
 bool hasVowel = false;
-bool hasSpacebar = false;
+bool hasSpaceBar = false;
 
 -(id)init
 {
-    if (self = [super init])
-    {
-        for (int i=0;i<BACKSPACE_BUFFER;i++) 
-        {
+    if (self = [super init]) {
+        for (int i=0;i<BACKSPACE_BUFFER;i++) {
             self.kbBuffer[i] = '\b';
         }
     }
@@ -156,8 +156,7 @@ bool hasSpacebar = false;
 	LookupChar(u, w);
 	if( !*u ) {
 		*s++ = w;
-    }
-	else {
+    } else {
         char *ss = kbCharmap[u-UTF16];
 		while( *ss ) 
             *s++ = *ss++;
@@ -169,8 +168,7 @@ bool hasSpacebar = false;
 - (void) mapToCharset: (UniChar *)w : (int) count
 {
 	UniChar *s;
-	for( s = _kbBuffer+BACKSPACE_BUFFER, pw = w; count>0; count--, w++ )
-    {
+	for( s = _kbBuffer+BACKSPACE_BUFFER, pw = w; count>0; count--, w++ ) {
         *s++ = *w;
     }
 	*s = 0;
@@ -253,6 +251,7 @@ bool hasSpacebar = false;
     count = 0;
     *word = 0;
     hasVowel = NO;
+    hasSpaceBar = NO;
     //    Speller.Clear();
 }
 
@@ -280,14 +279,14 @@ bool hasSpacebar = false;
             vpc = 1;
             vps[vp = 0] = -1;
             lvs[0] = key;
-        }
-        else
-            if( kp==12 || kp>37 )
+        } else {
+            if( kp==12 || kp>37 ) {
                 return;
-            else {
+            } else {
                 vp = -1;
                 vpc = 0;
             }
+        }
     }
     else {
         if( kp==12 || kp>37 ) {
@@ -379,8 +378,39 @@ bool hasSpacebar = false;
     return NO;
 }
 
+- (int) checkShortcut 
+{
+    NSString *lastWord = [NSString stringWithCharacters:word length:count];
+    NSString* text = [[AppData sharedAppData].shortcutDictionary objectForKey:lastWord];
+    if (text != nil) {
+        int i=0;
+        for (;i<text.length;i++) {
+            word[i] = [text characterAtIndex:i];
+        }
+        word[i] = XK_SpaceBar;
+        kbPLength = count;
+        [self mapToCharset:word:[text length]+1];
+
+        return count;                            
+    }
+
+    return -1;
+}
+
 - (int) addKey: (UniChar) key 
 {
+    if (key == XK_SpaceBar) {
+        int p = -1;
+        
+        if (hasSpaceBar) {
+            p = [self checkShortcut];
+        }
+
+        [self clearBuffer];
+        hasSpaceBar = YES;         
+        return p;
+    }
+    
     int p = -1;
     int i, j = -1;
     ushort c = 0;
@@ -428,8 +458,7 @@ bool hasSpacebar = false;
         i--;
     }
 
-    if( i == count-1 && i-1 >= 0 &&	(j = [self uiGroup:word[i-1]]) > 0 )
-    {
+    if( i == count-1 && i-1 >= 0 &&	(j = [self uiGroup:word[i-1]]) > 0 ) {
         switch( word[i] ) {
 			case chr_a:
 			case chr_A:
@@ -472,8 +501,7 @@ bool hasSpacebar = false;
 	if( !v[i].r2 ) {
 		word[ p ] = v[i].r1;
 		backup[ p ] = c;
-	}
-	else {
+	} else {
 		word[ tempoff = count++ ] = (ushort)key;
 		word[ p ] = backup[ p ];
 	}

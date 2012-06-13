@@ -19,6 +19,7 @@
 #import "AppData.h"
 #import "PTHotKey.h"
 #import "NSFileManager+DirectoryLocations.h"
+#import "ShortcutSetting.h"
 
 @implementation AppData
 
@@ -26,6 +27,7 @@
 @synthesize toggleCombo;
 @synthesize switchMethodCombo;
 @synthesize shortcuts;
+@synthesize shortcutDictionary;
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
@@ -40,7 +42,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
     PTKeyCombo *keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
     [AppData sharedAppData].toggleCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
     [keyCombo release];
-    
+
     dictionary = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_SWITCH_METHOD_HOTKEY];
     keyCombo = [[PTKeyCombo alloc] initWithPlistRepresentation:dictionary];
     [AppData sharedAppData].switchMethodCombo = SRMakeKeyCombo([keyCombo keyCode], [keyCombo modifiers]);
@@ -50,19 +52,19 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 + (void) loadShortcuts
 {
     NSString *filePath = [[[NSFileManager defaultManager] applicationSupportDirectory] stringByAppendingPathComponent:@"shortcuts.setting"];
-    NSData *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    if (data != nil) 
-    {
+    NSData *data = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];     
+    [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] init];    
+    [AppData sharedAppData].shortcutDictionary = [[NSMutableDictionary alloc] init];
+
+    if (data != nil) {
         NSArray *savedArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        if (savedArray != nil) 
-        {
-            [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] initWithArray:savedArray];
-        } else
-        {
-            [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] init];        
+        if (savedArray != nil) {
+            [[AppData sharedAppData].shortcuts setArray:savedArray];
         }
-    } else {
-        [AppData sharedAppData].shortcuts = [[NSMutableArray alloc] init];
+    }
+
+    for (ShortcutSetting *s in [AppData sharedAppData].shortcuts) {
+        [[AppData sharedAppData].shortcutDictionary setObject:s.text forKey:s.shortcut];
     }
 }
 
