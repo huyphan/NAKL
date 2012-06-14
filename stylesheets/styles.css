@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
 body {
+  background: url("../images/ltbg.jpg") repeat scroll 0 0 transparent;
   padding:50px;
   font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#777;
@@ -198,7 +199,7 @@ footer {
 .flag {
 	width: 16px;
 	height: 11px;
-	background:url(flags.png) no-repeat
+	background:url("../images/flags.png") no-repeat
 }
 
 .flag-gb {background-position: -16px 0}
