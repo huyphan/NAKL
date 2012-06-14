@@ -53,7 +53,6 @@
 		5158BDED1568CB1800EEBAD6 /* KeyboardHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardHandler.h; sourceTree = "<group>"; };
 		5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHandler.m; sourceTree = "<group>"; };
 		516BEA5D15726A7B0085B4BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = "en.lproj/NAKL-Info.plist"; sourceTree = "<group>"; };
-		516BEA6115726BA20085B4BA /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = vi; path = "vi.lproj/NAKL-Info.plist"; sourceTree = "<group>"; };
 		5189A8DC1570C31100327B99 /* telex-standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "telex-standard.h"; sourceTree = "<group>"; };
 		5189A8DD1570CA5100327B99 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		5189A8DE1570CA5100327B99 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
@@ -341,7 +340,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				516BEA5D15726A7B0085B4BA /* en */,
-				516BEA6115726BA20085B4BA /* vi */,
 			);
 			name = "NAKL-Info.plist";
 			sourceTree = "<group>";
