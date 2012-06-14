@@ -2,7 +2,7 @@
 
 body {
   padding:50px;
-  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#777;
   font-weight:300;
 }
@@ -154,7 +154,7 @@ header ul li + li + li {
 }
 
 header ul a strong {
-  font-size:14px;
+  font-size:13px;
   display:block;
   color:#222;
 }
@@ -182,6 +182,28 @@ footer {
   position:fixed;
   bottom:50px;
 }
+
+.language {
+    float:right;
+}
+
+.clear {
+    clear:both;
+}
+
+.download {
+  font:14px/1.5 Lato,"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.flag {
+	width: 16px;
+	height: 11px;
+	background:url(flags.png) no-repeat
+}
+
+.flag-gb {background-position: -16px 0}
+.flag-vn {background-position: 0 -11px}
+
 
 @media print, screen and (max-width: 960px) {
   
