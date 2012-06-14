@@ -164,4 +164,24 @@
 #define XK_Hyper_R		0xEE	/* Right hyper */
 
 
+#define KC_BackSpace	0x33	/* back space, back char */
+#define KC_Tab			0x30
+#define KC_Return		0x24	/* Return, enter */
+#define KC_Return_Num	0x4c	/* BOL */
+#define KC_Escape		0x35
+#define KC_SpaceBar     0x31
+#define KC_Delete		0x75	/* Delete, rubout */
+
+/* Cursor control & motion */
+
+#define KC_Home			0x73
+#define KC_Left			0x7b	/* Move left, left arrow */
+#define KC_Up			0x7e	/* Move up, up arrow */
+#define KC_Right		0x7c	/* Move right, right arrow */
+#define KC_Down			0x7d	/* Move down, down arrow */
+#define KC_Page_Up		0x74
+#define KC_Page_Down	0x79
+#define KC_End			0x77	/* EOL */
+
+
 #endif

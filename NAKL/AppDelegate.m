@@ -119,6 +119,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         kbHandler.kbMethod = VKM_OFF;
                     }
                     
+                    [((AppDelegate*) refcon) updateCheckedItem];
                     [((AppDelegate*) refcon) updateStatusItem];                    
                 }
                 
@@ -128,9 +129,10 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     } else if (kbHandler.kbMethod == VKM_TELEX) {
                         kbHandler.kbMethod = VKM_VNI;
                     } 
-                    
+
                     if (kbHandler.kbMethod != VKM_OFF) {
-                        [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];                    
+                        [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];                     
+                        [((AppDelegate*) refcon) updateCheckedItem];                        
                         [((AppDelegate*) refcon) updateStatusItem];                                        
                     }
                 }     
@@ -140,19 +142,20 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             } 
  
             /* TODO: Use keycode instead of value of character */
-            switch (key) {
-                case XK_Linefeed:
-                case XK_Clear:
-                case XK_Return:
-                case XK_Home:
-                case XK_Left:
-                case XK_Up:
-                case XK_Right:
-                case XK_Down:
-                case XK_End:
-                case XK_Begin:
-                case XK_Tab:
-                case XK_BackSpace:
+            switch (keycode) {
+                case KC_Return:
+                case KC_Return_Num:
+                case KC_Home:
+                case KC_Left:
+                case KC_Up:
+                case KC_Right:
+                case KC_Down:
+                case KC_End:
+                case KC_Tab:
+                case KC_BackSpace:
+                case KC_Delete:
+                case KC_Page_Up:
+                case KC_Page_Down:
                     [kbHandler clearBuffer];
                     break;
                     
@@ -243,6 +246,13 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 }
 
 #pragma mark GUI
+
+- (void) updateCheckedItem {
+    int method = kbHandler.kbMethod;
+    for (id object in [statusMenu itemArray]) {
+        [(NSMenuItem*) object setState:((NSMenuItem*) object).tag == method];
+    }    
+}
 
 - (void) updateStatusItem {
     int method = kbHandler.kbMethod;
