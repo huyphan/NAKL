@@ -15,7 +15,6 @@
 		5158BDC51568111A00EEBAD6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5158BDC41568111A00EEBAD6 /* AppDelegate.m */; };
 		5158BDC81568111A00EEBAD6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5158BDC61568111A00EEBAD6 /* MainMenu.xib */; };
 		5158BDEF1568CB1800EEBAD6 /* KeyboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */; };
-		516BEA6215726BC70085B4BA /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516BEA6415726BC70085B4BA /* Preferences.xib */; };
 		5189A8DF1570CA5100327B99 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8DE1570CA5100327B99 /* PreferencesController.m */; };
 		5189A8F41570CEE400327B99 /* ShortcutRecorder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5189A8F21570CEE400327B99 /* ShortcutRecorder.strings */; };
 		5189A8F61570D81800327B99 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5189A8F51570D81800327B99 /* Carbon.framework */; };
@@ -29,6 +28,7 @@
 		5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91115711B7F00327B99 /* PTKeyCodeTranslator.m */; };
 		5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91315711B7F00327B99 /* PTKeyCombo.m */; };
 		5189A9221571CC2200327B99 /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9211571CC2200327B99 /* AppData.m */; };
+		51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51E7BA961589CB50003A6F3F /* Preferences.xib */; };
 		51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8A4DB1577D41900D42909 /* ShortcutSetting.m */; };
 /* End PBXBuildFile section */
 
@@ -54,8 +54,6 @@
 		5158BDEE1568CB1800EEBAD6 /* KeyboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHandler.m; sourceTree = "<group>"; };
 		516BEA5D15726A7B0085B4BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = "en.lproj/NAKL-Info.plist"; sourceTree = "<group>"; };
 		516BEA6115726BA20085B4BA /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = vi; path = "vi.lproj/NAKL-Info.plist"; sourceTree = "<group>"; };
-		516BEA6315726BC70085B4BA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Preferences.xib; sourceTree = "<group>"; };
-		516BEA6515726BDD0085B4BA /* vi */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = vi; path = vi.lproj/Preferences.xib; sourceTree = "<group>"; };
 		5189A8DC1570C31100327B99 /* telex-standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "telex-standard.h"; sourceTree = "<group>"; };
 		5189A8DD1570CA5100327B99 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		5189A8DE1570CA5100327B99 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
@@ -82,6 +80,7 @@
 		5189A9201571CC2200327B99 /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		5189A9211571CC2200327B99 /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		5189A9231571CD6D00327B99 /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
+		51E7BA951589CB50003A6F3F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Preferences.xib; sourceTree = "<group>"; };
 		51F8A4DA1577D41900D42909 /* ShortcutSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutSetting.h; sourceTree = "<group>"; };
 		51F8A4DB1577D41900D42909 /* ShortcutSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutSetting.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,7 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				5158BDC61568111A00EEBAD6 /* MainMenu.xib */,
-				516BEA6415726BC70085B4BA /* Preferences.xib */,
+				51E7BA961589CB50003A6F3F /* Preferences.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -287,7 +286,7 @@
 			files = (
 				5158BDBC1568111A00EEBAD6 /* InfoPlist.strings in Resources */,
 				5158BDC81568111A00EEBAD6 /* MainMenu.xib in Resources */,
-				516BEA6215726BC70085B4BA /* Preferences.xib in Resources */,
+				51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */,
 				5189A8F41570CEE400327B99 /* ShortcutRecorder.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,21 +346,20 @@
 			name = "NAKL-Info.plist";
 			sourceTree = "<group>";
 		};
-		516BEA6415726BC70085B4BA /* Preferences.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				516BEA6315726BC70085B4BA /* en */,
-				516BEA6515726BDD0085B4BA /* vi */,
-			);
-			name = Preferences.xib;
-			sourceTree = "<group>";
-		};
 		5189A8F21570CEE400327B99 /* ShortcutRecorder.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5189A8F31570CEE400327B99 /* en */,
 			);
 			name = ShortcutRecorder.strings;
+			sourceTree = "<group>";
+		};
+		51E7BA961589CB50003A6F3F /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51E7BA951589CB50003A6F3F /* en */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -419,7 +417,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
@@ -435,7 +433,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
