@@ -46,6 +46,7 @@ typedef enum {
 - (IBAction) quit:(id)sender;
 - (IBAction) showPreferences:(id)sender;
 - (void) updateStatusItem;
+- (void) updateCheckedItem;
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) CFMachPortRef eventTap;    
