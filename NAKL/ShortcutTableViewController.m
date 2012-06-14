@@ -13,6 +13,8 @@
 
 @implementation ShortcutTableViewController
 
+@synthesize list;
+
 - (id)init
 {
     self = [super init];
