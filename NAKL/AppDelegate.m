@@ -72,6 +72,19 @@ bool dirty;
     statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
     [statusItem setMenu:statusMenu];
     [statusItem setAction:@selector(menuItemClicked)];
+    [statusItem setHighlightMode: YES];    
+
+    
+    NSSize imageSize;
+    imageSize.width = 16;
+    imageSize.height = 16;        
+    
+    NSBundle *bundle = [NSBundle mainBundle];    
+    viStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon24" ofType: @"png"]];
+    [viStatusImage setSize:imageSize];
+    
+    enStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon_blue_24" ofType: @"png"]];
+    [enStatusImage setSize:imageSize];
 }
 
 #pragma mark Keyboard Handler
@@ -257,16 +270,13 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 - (void) updateStatusItem {
     int method = kbHandler.kbMethod;
     switch (method) {
-        case VKM_VNI:
-            [statusItem setTitle:@"vni"];
-            break;            
-            
+        case VKM_VNI:       
         case VKM_TELEX:
-            [statusItem setTitle:@"telex"];
+            [statusItem setImage:viStatusImage];
             break;
             
         default:
-            [statusItem setTitle:@"en"];
+            [statusItem setImage:enStatusImage];
             break;
     }
 }

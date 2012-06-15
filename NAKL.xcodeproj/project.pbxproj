@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		51151930157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */; };
+		51471007158B1BD000FFB252 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 51471006158B1BD000FFB252 /* icon.png */; };
+		5147100B158B1F4D00FFB252 /* icon24.png in Resources */ = {isa = PBXBuildFile; fileRef = 5147100A158B1F4D00FFB252 /* icon24.png */; };
+		5147100F158B25E800FFB252 /* icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 5147100E158B25E800FFB252 /* icon.ico */; };
+		51471011158B2B6200FFB252 /* NAKL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 51471010158B2B6200FFB252 /* NAKL.icns */; };
+		51471013158B2C2000FFB252 /* icon_blue_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 51471012158B2C2000FFB252 /* icon_blue_24.png */; };
 		5147E45A15791D5A00932040 /* ShortcutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5147E45915791D5A00932040 /* ShortcutTableViewController.m */; };
 		5158BDB21568111A00EEBAD6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5158BDB11568111A00EEBAD6 /* Cocoa.framework */; };
 		5158BDBC1568111A00EEBAD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5158BDBA1568111A00EEBAD6 /* InfoPlist.strings */; };
@@ -35,6 +40,11 @@
 /* Begin PBXFileReference section */
 		5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		51471006158B1BD000FFB252 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		5147100A158B1F4D00FFB252 /* icon24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon24.png; sourceTree = "<group>"; };
+		5147100E158B25E800FFB252 /* icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = icon.ico; sourceTree = "<group>"; };
+		51471010158B2B6200FFB252 /* NAKL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NAKL.icns; sourceTree = "<group>"; };
+		51471012158B2C2000FFB252 /* icon_blue_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blue_24.png; sourceTree = "<group>"; };
 		5147E45815791D5A00932040 /* ShortcutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutTableViewController.h; sourceTree = "<group>"; };
 		5147E45915791D5A00932040 /* ShortcutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutTableViewController.m; sourceTree = "<group>"; };
 		5158BDAD1568111A00EEBAD6 /* NAKL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NAKL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +236,11 @@
 		51F8A4DF1578FDD200D42909 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				51471012158B2C2000FFB252 /* icon_blue_24.png */,
+				51471010158B2B6200FFB252 /* NAKL.icns */,
+				5147100E158B25E800FFB252 /* icon.ico */,
+				51471006158B1BD000FFB252 /* icon.png */,
+				5147100A158B1F4D00FFB252 /* icon24.png */,
 				5158BDC61568111A00EEBAD6 /* MainMenu.xib */,
 				51E7BA961589CB50003A6F3F /* Preferences.xib */,
 			);
@@ -287,6 +302,11 @@
 				5158BDC81568111A00EEBAD6 /* MainMenu.xib in Resources */,
 				51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */,
 				5189A8F41570CEE400327B99 /* ShortcutRecorder.strings in Resources */,
+				51471007158B1BD000FFB252 /* icon.png in Resources */,
+				5147100B158B1F4D00FFB252 /* icon24.png in Resources */,
+				5147100F158B25E800FFB252 /* icon.ico in Resources */,
+				51471011158B2B6200FFB252 /* NAKL.icns in Resources */,
+				51471013158B2C2000FFB252 /* icon_blue_24.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +435,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";
@@ -431,7 +451,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NAKL/NAKL-Prefix.pch";
 				INFOPLIST_FILE = "NAKL/NAKL-Info.plist";

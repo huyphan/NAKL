@@ -36,7 +36,8 @@ typedef enum {
     NSWindow *_window;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;    
-    NSImage *statusImage;
+    NSImage *viStatusImage;
+    NSImage *enStatusImage;    
     NSImage *statusHighlightImage;   
     CFMachPortRef      eventTap;    
 }
