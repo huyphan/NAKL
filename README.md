@@ -12,7 +12,7 @@ Contributing
 Credits
 =======
 * chuoi (a.k.a Dao Hai Lam): author of [xvnkb](http://xvnkb.sourceforge.net). 
-* Thanks to mybb (a.k.a hieuln) and pmquan (a.k.a co`i) for helping me out testing this software.
+* Thanks to mybb (a.k.a hieuln) and pmquan (a.k.a co`i) for helping me testing out this software.
 
 
 License
