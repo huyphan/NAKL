@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>NAKL - Yet another Vietnamese input keyboard for Mac OS</title>
-    <link rel="stylesheet" href="stylesheets/font.css">
+    <title>NAKL - Bộ gõ tiếng việt cho Mac OS</title>
+    <link rel="stylesheet" href="stylesheets/font.css">    
+    <link rel="stylesheet" href="stylesheets/flag.css">        
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -14,37 +15,37 @@
   </head>
   <body>
     <div class="wrapper">
-      <header>      
+      <header>
         <h1>NAKL</h1>
-        <p>Yet another Vietnamese input keyboard for Mac OS</p>
+        <p>Bộ gõ tiếng việt cho Mac OS</p>
         <img src="images/logo.jpg" style="width:100px"/>        
-        <p>&nbsp;</p>        
+        <p>&nbsp;</p>
         <ul class="download">
-          <li><a href="downloads/NAKLv0.1.dmg">Download <strong style="padding-top:5px">DMG File</strong></a></li>
-          <li><a href="https://github.com/huyphan/NAKL/tarball/master">Download <strong style="padding-top:5px">source code</strong></a></li>
-          <li><a href="https://github.com/huyphan/NAKL">View On <strong style="padding-top:5px">GitHub</strong></a></li>
+          <li><a href="downloads/NAKLv0.1.dmg">Tải <strong style="padding-top:5px">tập tin cài đặt</strong></a></li>
+          <li><a href="https://github.com/huyphan/NAKL/tarball/master">Tải <strong style="padding-top:5px">mã nguồn</strong></a></li>
+          <li><a href="https://github.com/huyphan/NAKL">Xem tại <strong style="padding-top:5px">GitHub</strong></a></li>
         </ul>
       </header>
       <section>
         <div class="language">
-            <img src="images/blank.gif" class="flag flag-gb" />&nbsp;<a href="index.html">English</a> |&nbsp;<img src="images/blank.gif" class="flag flag-vn" />&nbsp;<a href="index_vn.html">Tiếng Việt</a>
+            <img src="images/blank.gif" class="flag flag-gb" />&nbsp;<a href="index_en.html">English</a> |&nbsp;<img src="images/blank.gif" class="flag flag-vn" />&nbsp;<a href="index_vn.html">Tiếng Việt</a>
         </div>
         <div class="clear"></div>
         <p>&nbsp;</p>
-        <h3>About NAKL</h3>
+        <h3>Giới thiệu</h3>
  
-<p>NAKL is an open source Vietnamese input keyboard for Mac OS. Its engine is based on <a href="http://xvnkb.sourceforge.net/">XVNKB</a>, a well known input keyboard on Linux.</p>
+<p>NAKL là một bộ gõ mã nguồn mở dành cho hệ điều hành Mac OS, được phát triển và cải tiến dựa trên <a href="http://xvnkb.sourceforge.net/">XVNKB</a>, một bộ gõ phổ biến trên Linux.</p>
 
-<h3>Current Version</h3>
+<h3>Phiên bản hiện tại</h3>
 
-<p>Latest stable version is <a href="downloads/NAKLv0.1.dmg">NAKL 0.1</a>. You can also <a href="https://github.com/huyphan/NAKL">build NAKL from source</a> with Xcode 4.0 and later.</p>
+<p>Phiên bản ổn định hiện tại của bộ gõ là <a href="downloads/NAKLv0.1.dmg">NAKL 0.1</a>. Bạn cũng có thể biên dịch NAKL mới nhất <a href="https://github.com/huyphan/NAKL">từ mã nguồn</a> với Xcode 4.0 trở lên. </p>
 
-<h3>Features</h3>
+<h3>Tính năng</h3>
 <p>
 <ul>
-<li>Lightweight</li>
-<li><i>Free</i> and <i>open</i></li>
-<li>Faster typing with keyboard shortcuts</li>
+<li>Nhỏ gọn</li>
+<li><i>Miễn phí</i> và <i>mã mở</i></li>
+<li>Gõ nhanh với phím tắt</li>
 </ul>
 </p>
 
@@ -57,28 +58,22 @@
 </p>
 -->
 
-<h3>Authors</h3>
+<h3>Nhóm phát triển</h3>
 <ul>
 <li><a href="http://github.com/huyphan">Huy Phan</a></li>
+<li><a href="http://phanquochuy.me/">Phan Quốc Huy</a>: thiết kế biểu tượng bộ gõ.</li>
 </ul>
+<h3>Liên lạc và hỗ trợ</h3>
 
-<h3>Contributors</h3>
-<ul>
-<li>Thanks to <a href="http://phanquochuy.me/">Phan Quốc Huy</a> for designing such a kick-ass app icon.</li>
-</ul>
+<p>Thông báo lỗi hoặc yêu cầu tính năng tại <a href="https://github.com/huyphan/NAKL/issues">Github</a>.</p>
 
-<h3>Support or Contact</h3>
-
-<p>Please report issues on the <a href="https://github.com/huyphan/NAKL/issues">GitHub issue tracker</a>.</p>
-
-<h3>FAQ</h3>
-<h4>1. NAKL doesn't work after installing</h4>
-<p>In order to use this application, the option "Enable access for assistive devices" must be enabled. Go to <i>System Preferences</i> -> <i>Universal Access</i> -> check on <i>"Enable access for assistive devices"</i>. If NALK is running, please quit and open it again. </p>
-
+<h3>Vấn đề thường gặp</h3>
+<h4>1. Không gõ được tiếng Việt bằng NAKL sau khi cài đặt</h4>
+<p>Bạn cần phải kích hoạt chức năng "Enable access for assistive devices" bằng cách: mở <i>System Preferences</i>, chọn <i>Universal Access</i> -> rồi đánh dấu vào <i>"Enable access for assistive devices"</i>. Nếu bạn đang chạy NAKL, hãy thoát và mở lại. </p>      
       </section>
       <footer>
         <small>
-            <p>Last updated: June 2012</p>
+            <p>Lần cập nhật cuối cùng: tháng 6/2012</p>
         </small>
       </footer>
     </div>
