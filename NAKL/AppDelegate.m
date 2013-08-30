@@ -124,6 +124,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             ushort keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
 
             if (flag & (controlKeys)) {
+                bool validShortcut = false;
                 if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
                 {
                     if (kbHandler.kbMethod == VKM_OFF) {
@@ -133,7 +134,8 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     }
                     
                     [((AppDelegate*) refcon) updateCheckedItem];
-                    [((AppDelegate*) refcon) updateStatusItem];                    
+                    [((AppDelegate*) refcon) updateStatusItem];
+                    validShortcut = true;
                 }
                 
                 if (((flag & controlKeys) == [AppData sharedAppData].switchMethodCombo.flags) && (keycode == [AppData sharedAppData].switchMethodCombo.code) ){
@@ -145,12 +147,16 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 
                     if (kbHandler.kbMethod != VKM_OFF) {
                         [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];                     
-                        [((AppDelegate*) refcon) updateCheckedItem];                        
+                        [((AppDelegate*) refcon) updateCheckedItem];
                         [((AppDelegate*) refcon) updateStatusItem];                                        
                     }
+                    validShortcut = true;
                 }     
 
                 [kbHandler clearBuffer];
+                
+                if (validShortcut) return NULL;
+                
                 break;
             } 
  
