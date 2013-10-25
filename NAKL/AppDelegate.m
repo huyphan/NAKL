@@ -45,6 +45,28 @@ bool dirty;
     NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
+    
+    // load the script from a resource by fetching its URL from within our bundle
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
+    if (path != nil)
+    {
+        NSURL* url = [NSURL fileURLWithPath:path];
+        if (url != nil)
+        {
+            NSDictionary* errors = [NSDictionary dictionary];
+            NSAppleScript* appleScript =
+            [[NSAppleScript alloc] initWithContentsOfURL:url error:&errors];
+            if (appleScript != nil)
+            {
+                [appleScript executeAndReturnError:nil];
+                [appleScript release];
+            } else {
+                
+            }
+        }
+    } else {
+        NSLog(@"Can't find EnableAssistiveDevices.scpt script");
+    }
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification

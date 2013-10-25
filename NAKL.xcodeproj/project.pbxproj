@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		51151930157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */; };
+		512C87BE181AE049008E8A65 /* EnableAssistiveDevices.scpt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 512C87BD181AE049008E8A65 /* EnableAssistiveDevices.scpt */; };
 		51471007158B1BD000FFB252 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 51471006158B1BD000FFB252 /* icon.png */; };
 		5147100B158B1F4D00FFB252 /* icon24.png in Resources */ = {isa = PBXBuildFile; fileRef = 5147100A158B1F4D00FFB252 /* icon24.png */; };
 		51471011158B2B6200FFB252 /* NAKL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 51471010158B2B6200FFB252 /* NAKL.icns */; };
@@ -36,9 +37,23 @@
 		51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8A4DB1577D41900D42909 /* ShortcutSetting.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		512C87BC181ADFC0008E8A65 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				512C87BE181AE049008E8A65 /* EnableAssistiveDevices.scpt in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		512C87BD181AE049008E8A65 /* EnableAssistiveDevices.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; name = EnableAssistiveDevices.scpt; path = scripts/EnableAssistiveDevices.scpt; sourceTree = "<group>"; };
 		51471006158B1BD000FFB252 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		5147100A158B1F4D00FFB252 /* icon24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon24.png; sourceTree = "<group>"; };
 		51471010158B2B6200FFB252 /* NAKL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NAKL.icns; sourceTree = "<group>"; };
@@ -117,6 +132,7 @@
 		5158BDA21568111A00EEBAD6 = {
 			isa = PBXGroup;
 			children = (
+				512C87BD181AE049008E8A65 /* EnableAssistiveDevices.scpt */,
 				5158BDB71568111A00EEBAD6 /* NAKL */,
 				5158BDB01568111A00EEBAD6 /* Frameworks */,
 				5158BDAE1568111A00EEBAD6 /* Products */,
@@ -254,6 +270,8 @@
 				5158BDA91568111A00EEBAD6 /* Sources */,
 				5158BDAA1568111A00EEBAD6 /* Frameworks */,
 				5158BDAB1568111A00EEBAD6 /* Resources */,
+				512C87BB181ADBF2008E8A65 /* ShellScript */,
+				512C87BC181ADFC0008E8A65 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -307,6 +325,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		512C87BB181ADBF2008E8A65 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "osacompile -d -o scripts/EnableAssistiveDevices.scpt scripts/EnableAssistiveDevices.applescript";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5158BDA91568111A00EEBAD6 /* Sources */ = {
