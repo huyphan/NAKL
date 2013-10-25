@@ -481,7 +481,7 @@ bool hasSpaceBar = false;
     }
 
     /* Try to prevent modifying long words (probably when typing foreign language)
-       TODO: this code is *hacky*, it need to be replaced by a proper spellcheck.
+       TODO: this code is *hacky*, it needs to be replaced by a proper spellcheck.
      */
     if (p - i >= BACKSPACE_BUFFER) {
         [self append:c:key];
