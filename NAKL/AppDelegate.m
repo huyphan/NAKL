@@ -16,7 +16,9 @@
  * along with NAKL.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
+#import <Security/Security.h>
 #import "AppDelegate.h"
+
 
 @implementation AppDelegate
 
@@ -27,9 +29,9 @@
 uint64_t controlKeys = kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl | kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskHelp;
 
 static char *separators[] = {
-	"",										// VKM_OFF
-	"!@#$%&)|\\-{}[]:\";<>,/'`~?.^*(+=",		// VKM_VNI
-	"!@#$%&)|\\-:\";<>,/'`~?.^*(+="			// VKM_TELEX
+	"",                                     // VKM_OFF
+	"!@#$%&)|\\-{}[]:\";<>,/'`~?.^*(+=",    // VKM_VNI
+	"!@#$%&)|\\-:\";<>,/'`~?.^*(+="         // VKM_TELEX
 };
 
 KeyboardHandler *kbHandler;
@@ -39,33 +41,42 @@ bool dirty;
 
 #pragma mark Initialization
 
-+(void)initialize
++ (void)initialize
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
     
-    // load the script from a resource by fetching its URL from within our bundle
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
-    if (path != nil)
-    {
-        NSURL* url = [NSURL fileURLWithPath:path];
-        if (url != nil)
-        {
-            NSDictionary* errors = [NSDictionary dictionary];
-            NSAppleScript* appleScript =
-            [[NSAppleScript alloc] initWithContentsOfURL:url error:&errors];
-            if (appleScript != nil)
-            {
-                [appleScript executeAndReturnError:nil];
-                [appleScript release];
-            } else {
-                
-            }
-        }
+    BOOL accessibilityEnabled = YES;
+    
+    if (AXIsProcessTrustedWithOptions != NULL) {
+        NSDictionary *options = @{(id) kAXTrustedCheckOptionPrompt: @NO};
+        accessibilityEnabled  = AXIsProcessTrustedWithOptions((CFDictionaryRef)options);
     } else {
-        NSLog(@"Can't find EnableAssistiveDevices.scpt script");
+        accessibilityEnabled = AXAPIEnabled();
+    }
+    
+    if (!accessibilityEnabled) {
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
+        if (path != nil)
+        {
+            NSURL* url = [NSURL fileURLWithPath:path];
+            if (url != nil)
+            {
+                NSDictionary* errors       = [NSDictionary dictionary];
+                NSAppleScript* appleScript = [[NSAppleScript alloc] initWithContentsOfURL:url error:&errors];
+                if (appleScript != nil)
+                {
+                    [appleScript executeAndReturnError:nil];
+                    [appleScript release];
+                } else {
+                    
+                }
+            }
+        } else {
+            NSLog(@"Can't find EnableAssistiveDevices.scpt script");
+        }
     }
 }
 
@@ -77,7 +88,7 @@ bool dirty;
     [AppData loadHotKeys];
     [AppData loadShortcuts];
     
-    int method = [[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
+    int method = (int)[[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
     for (id object in [statusMenu itemArray]) {
         [(NSMenuItem*) object setState:((NSMenuItem*) object).tag == method];
     }
@@ -150,7 +161,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                 if (((flag & controlKeys) == [AppData sharedAppData].toggleCombo.flags) && (keycode == [AppData sharedAppData].toggleCombo.code) )
                 {
                     if (kbHandler.kbMethod == VKM_OFF) {
-                        kbHandler.kbMethod = [[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
+                        kbHandler.kbMethod = (int)[[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
                     } else {
                         kbHandler.kbMethod = VKM_OFF;
                     }
@@ -224,10 +235,10 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                                 CGEventRef keyEventDown = CGEventCreateKeyboardEvent( NULL, 1, true);
                                 CGEventRef keyEventUp = CGEventCreateKeyboardEvent(NULL, 1, false);                            
 
-                                int flag = CGEventGetFlags(keyEventDown);
+                                int flag = (int) CGEventGetFlags(keyEventDown);
                                 CGEventSetFlags(keyEventDown, NAKL_MAGIC_NUMBER | flag);
                                 
-                                flag = CGEventGetFlags(keyEventUp);
+                                flag = (int) CGEventGetFlags(keyEventUp);
                                 CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER | flag);                                
                                 if (*x == '\b') {
                                     CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);

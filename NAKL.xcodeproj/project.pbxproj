@@ -33,6 +33,7 @@
 		5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91115711B7F00327B99 /* PTKeyCodeTranslator.m */; };
 		5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91315711B7F00327B99 /* PTKeyCombo.m */; };
 		5189A9221571CC2200327B99 /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9211571CC2200327B99 /* AppData.m */; };
+		519D090B1946B2E5000722E7 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 519D090A1946B2E5000722E7 /* Images-2.xcassets */; };
 		51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51E7BA961589CB50003A6F3F /* Preferences.xib */; };
 		51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8A4DB1577D41900D42909 /* ShortcutSetting.m */; };
 /* End PBXBuildFile section */
@@ -102,6 +103,8 @@
 		5189A9201571CC2200327B99 /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		5189A9211571CC2200327B99 /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		5189A9231571CD6D00327B99 /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
+		519D0909194641E4000722E7 /* NAKL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NAKL.entitlements; sourceTree = "<group>"; };
+		519D090A1946B2E5000722E7 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		51E7BA951589CB50003A6F3F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Preferences.xib; sourceTree = "<group>"; };
 		51F8A4DA1577D41900D42909 /* ShortcutSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutSetting.h; sourceTree = "<group>"; };
 		51F8A4DB1577D41900D42909 /* ShortcutSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutSetting.m; sourceTree = "<group>"; };
@@ -170,11 +173,13 @@
 		5158BDB71568111A00EEBAD6 /* NAKL */ = {
 			isa = PBXGroup;
 			children = (
+				519D0909194641E4000722E7 /* NAKL.entitlements */,
 				5115192D157FA037003D3BB4 /* Utils */,
 				51F8A4DF1578FDD200D42909 /* Resources */,
 				51F8A4DE1578FDBE00D42909 /* Classes */,
 				5189A90B15711B5600327B99 /* HotKey */,
 				5189A8FB1570EC9900327B99 /* ShortcutRecorder */,
+				519D090A1946B2E5000722E7 /* Images-2.xcassets */,
 				5158BDB81568111A00EEBAD6 /* Supporting Files */,
 			);
 			path = NAKL;
@@ -289,6 +294,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
+				TargetAttributes = {
+					5158BDAC1568111A00EEBAD6 = {
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 5158BDA71568111A00EEBAD6 /* Build configuration list for PBXProject "NAKL" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -313,6 +327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				519D090B1946B2E5000722E7 /* Images-2.xcassets in Resources */,
 				5158BDBC1568111A00EEBAD6 /* InfoPlist.strings in Resources */,
 				5158BDC81568111A00EEBAD6 /* MainMenu.xib in Resources */,
 				51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */,
@@ -472,7 +487,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -489,7 +506,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

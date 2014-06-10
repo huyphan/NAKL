@@ -40,12 +40,12 @@
 @property(nonatomic, retain) NSArray *vowelsMap;
 
 -(id)init;
-- (void) mapToCharset: (ushort*) w: (int) count;
+- (void) mapToCharset:(ushort*)w :(int)count;
 - (int) uiGroup: (ushort) u;
-- (int) utfVnCmp: (ushort) u1: (ushort) u2;
+- (int) utfVnCmp: (ushort)u1 :(ushort)u2;
 
-- (bool) isValidModifier: (UniChar) c: (char) key;
-- (void) append: (ushort) lastkey: (UniChar) key;
+- (bool) isValidModifier: (UniChar)c :(char) key;
+- (void) append: (ushort)lastkey :(UniChar)key;
 - (void) clearBuffer;
 - (void) shiftBuffer;
 - (void) updateBuffer;

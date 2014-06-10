@@ -139,7 +139,7 @@ bool hasSpaceBar = false;
     return self;
 }
 
-- (void)setKbBuffer:(UniChar *)buffer
+- (void)setKbBuffer :(UniChar *)buffer
 {
     memcpy(_kbBuffer, buffer, 256*sizeof(UniChar));    
 }
@@ -149,7 +149,7 @@ bool hasSpaceBar = false;
     return _kbBuffer;
 }
 
-- (char*) strCat:(char*) s: (UniChar) w
+- (char*) strCat :(char*)s :(UniChar)w
 {
 	register ushort *u = UTF16;
     
@@ -165,7 +165,7 @@ bool hasSpaceBar = false;
 	return s;
 }
 
-- (void) mapToCharset: (UniChar *)w : (int) count
+- (void) mapToCharset :(UniChar *)w :(int)count
 {
 	UniChar *s;
 	for( s = _kbBuffer+BACKSPACE_BUFFER, pw = w; count>0; count--, w++ ) {
@@ -189,13 +189,13 @@ bool hasSpaceBar = false;
 	register ushort *ui = UI;
 	while( *ui ) {
         if( u==*ui++ ) {
-            return ui-UI;
+            return ui - UI;
         }
     }
 	return 0;
 }
 
-- (int) utfVnCmp: (ushort) u1: (ushort) u2
+- (int) utfVnCmp :(ushort)u1 :(ushort) u2
 {
 	static ushort V[] = {
 		utf_a, utf_A, utf_a1, utf_A1, utf_a2, utf_A2,
@@ -267,7 +267,7 @@ bool hasSpaceBar = false;
 	count = 1;
 }
 
-- (void) append: (ushort) lastkey: (UniChar) key
+- (void) append :(ushort)lastkey :(UniChar)key
 {
 	static char *spchk = "AIUEOYaiueoy|BDFJKLQSVWXZbdfjklqsvwxz|'`~?.^*+=";
 	static char *vwchk = "|ia|ua|oa|ai|ui|oi|au|iu|eu|ie|ue|oe|ye|ao|uo|eo|ay|uy|uu|ou|io|";
@@ -356,7 +356,7 @@ bool hasSpaceBar = false;
 	word[count++] = (ushort)key;
 }
 
-- (bool) isValidModifier: (UniChar) c: (char) key 
+- (bool) isValidModifier :(UniChar)c :(char)key
 { 
     char *m = modifierKeys[self.kbMethod - 1];
     if ( (65<=key) && (key<=90)) {
