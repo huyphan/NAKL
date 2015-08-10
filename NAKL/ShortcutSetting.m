@@ -26,10 +26,6 @@
 - (id) init
 {
     self = [super init];
-    if (self) {
-
-    }
-    
     return self;
 }
 
@@ -39,12 +35,12 @@
 }
 
 - (id) initWithCoder:(NSCoder *)coder {
-	if ((self = [super init]))
-	{
-        self.shortcut = [[coder decodeObjectForKey:@"shortcut"] retain];  
-        self.text = [[coder decodeObjectForKey:@"text"] retain];          
- 	}
-	return self;
+    if ((self = [super init]))
+    {
+        self.shortcut = [[coder decodeObjectForKey:@"shortcut"] retain];
+        self.text = [[coder decodeObjectForKey:@"text"] retain];
+    }
+    return self;
 }
 
 @end
