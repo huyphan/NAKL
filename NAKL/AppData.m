@@ -71,10 +71,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
 + (void) loadExcludedApps
 {
-    [AppData sharedAppData].excludedApps = [[NSMutableArray alloc] init];
-    NSArray *excludedApps = [[AppData sharedAppData].userPrefs arrayForKey:NAKL_EXCLUDED_APPS];
+    [AppData sharedAppData].excludedApps = [[NSMutableDictionary alloc] init];
+    NSDictionary *excludedApps = [[AppData sharedAppData].userPrefs dictionaryForKey:NAKL_EXCLUDED_APPS];
     if (excludedApps != nil) {
-        [[AppData sharedAppData].excludedApps setArray:excludedApps];
+        [[AppData sharedAppData].excludedApps setDictionary:excludedApps];
     }
 }
 

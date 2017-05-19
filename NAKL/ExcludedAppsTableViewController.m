@@ -21,8 +21,6 @@
 
 @implementation ExcludedAppsTableViewController
 
-@synthesize list;
-
 - (id)init
 {
     self = [super init];
@@ -34,18 +32,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [[AppData sharedAppData].excludedApps count];
+    return [[[AppData sharedAppData].excludedApps allKeys] count];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    return [[AppData sharedAppData].excludedApps objectAtIndex:row];
-}
-
-- (NSString*)getRealAppName:(NSString*) appPath
-{
-    NSDictionary* plistData = [NSDictionary dictionaryWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Info.plist"]];
-    return [plistData valueForKeyPath:@"CFBundleName"];
+    return [[AppData sharedAppData].excludedApps objectForKey:[[[AppData sharedAppData].excludedApps allKeys] objectAtIndex:row]];
 }
 
 - (IBAction)add:(id)sender
@@ -59,12 +51,15 @@
     if ([dialog runModal] == NSOKButton) {
         NSArray* selectedPaths = [dialog filenames];
         for (NSString* path in selectedPaths) {
-            NSString *appName = [self getRealAppName:path];
-            if ((appName != nil) && ![[AppData sharedAppData].excludedApps containsObject:appName]) {
-                [[AppData sharedAppData].excludedApps addObject:appName];
+            NSDictionary* plistData = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingString:@"/Contents/Info.plist"]];
+            NSString *appBundleIdentifier = [plistData valueForKeyPath:@"CFBundleIdentifier"];
+            NSString *appName = [plistData valueForKeyPath:@"CFBundleName"];
+            if ((appBundleIdentifier != nil) && ![[AppData sharedAppData].excludedApps objectForKey:appBundleIdentifier]) {
+                [[AppData sharedAppData].excludedApps setObject:appName forKey:appBundleIdentifier];
+                [self.list addObject:appBundleIdentifier];
+                NSLog(@"Added");
             }
         }
-        [[AppData sharedAppData].excludedApps setArray:[[AppData sharedAppData].excludedApps sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
         [[AppData sharedAppData].userPrefs setObject:[AppData sharedAppData].excludedApps forKey:NAKL_EXCLUDED_APPS];
         [tableView reloadData];
     }
@@ -75,7 +70,8 @@
     NSInteger row = [tableView selectedRow];
     [tableView abortEditing];
     if (row != -1) {
-        [[AppData sharedAppData].excludedApps removeObjectAtIndex:row];
+        NSString* appBundleIdentifier = [[[AppData sharedAppData].excludedApps allKeys] objectAtIndex:row];
+        [[AppData sharedAppData].excludedApps removeObjectForKey:appBundleIdentifier];
     }
     [tableView reloadData];
     [[AppData sharedAppData].userPrefs setObject:[AppData sharedAppData].excludedApps forKey:NAKL_EXCLUDED_APPS];

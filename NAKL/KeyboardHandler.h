@@ -39,7 +39,7 @@
 @property(nonatomic) int kbMethod;
 @property(nonatomic, retain) NSArray *vowelsMap;
 
--(id)init;
+- (id)init;
 - (void) mapToCharset:(ushort*)w :(int)count;
 - (int) uiGroup: (ushort) u;
 - (int) utfVnCmp: (ushort)u1 :(ushort)u2;

@@ -21,7 +21,6 @@
 
 @interface ExcludedAppsTableViewController : NSObject <NSTableViewDataSource> {
     IBOutlet NSTableView *tableView;
-    NSMutableArray *list;
 }
 
 @property (readwrite,assign) NSMutableArray *list;

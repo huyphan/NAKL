@@ -18,7 +18,6 @@
 
 #import <Security/Security.h>
 #import "AppDelegate.h"
-#import "NSMutableArray+BinarySearch.h"
 
 @implementation AppDelegate
 
@@ -132,7 +131,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     long i;
     
     NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
-    NSString *activeAppName = [activeApp objectForKey:@"NSApplicationName"];
+    NSString *activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
 
     uint64_t flag = CGEventGetFlags(event);
     
@@ -140,7 +139,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
         return event;
     }
     
-    if ([[AppData sharedAppData].excludedApps binarySearch:activeAppName] != NSNotFound) {
+    if ([[AppData sharedAppData].excludedApps objectForKey:activeAppBundleId]) {
         return event;
     }
     
