@@ -28,6 +28,7 @@
 @synthesize switchMethodCombo;
 @synthesize shortcuts;
 @synthesize shortcutDictionary;
+@synthesize excludedApps;
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
@@ -65,6 +66,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(AppData);
 
     for (ShortcutSetting *s in [AppData sharedAppData].shortcuts) {
         [[AppData sharedAppData].shortcutDictionary setObject:s.text forKey:s.shortcut];
+    }
+}
+
++ (void) loadExcludedApps
+{
+    [AppData sharedAppData].excludedApps = [[NSMutableArray alloc] init];
+    NSArray *excludedApps = [[AppData sharedAppData].userPrefs arrayForKey:NAKL_EXCLUDED_APPS];
+    if (excludedApps != nil) {
+        [[AppData sharedAppData].excludedApps setArray:excludedApps];
     }
 }
 

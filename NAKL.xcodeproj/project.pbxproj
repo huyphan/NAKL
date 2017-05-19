@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AC205CD1ECE60F4002016FB /* ExcludedAppsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AC205CC1ECE60F4002016FB /* ExcludedAppsTableViewController.m */; };
+		2AC205D11ECE97CA002016FB /* NSMutableArray+BinarySearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AC205D01ECE97CA002016FB /* NSMutableArray+BinarySearch.m */; };
 		51151930157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */; };
 		512C87BE181AE049008E8A65 /* EnableAssistiveDevices.scpt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 512C87BD181AE049008E8A65 /* EnableAssistiveDevices.scpt */; };
 		51471007158B1BD000FFB252 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 51471006158B1BD000FFB252 /* icon.png */; };
@@ -52,6 +54,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2AC205CB1ECE60F4002016FB /* ExcludedAppsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcludedAppsTableViewController.h; sourceTree = "<group>"; };
+		2AC205CC1ECE60F4002016FB /* ExcludedAppsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcludedAppsTableViewController.m; sourceTree = "<group>"; };
+		2AC205D01ECE97CA002016FB /* NSMutableArray+BinarySearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+BinarySearch.m"; sourceTree = "<group>"; };
+		2AC205D21ECE97DE002016FB /* NSMutableArray+BinarySearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+BinarySearch.h"; sourceTree = "<group>"; };
 		5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
 		512C87BD181AE049008E8A65 /* EnableAssistiveDevices.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; name = EnableAssistiveDevices.scpt; path = scripts/EnableAssistiveDevices.scpt; sourceTree = "<group>"; };
@@ -128,6 +134,8 @@
 			children = (
 				5115192E157FA071003D3BB4 /* NSFileManager+DirectoryLocations.h */,
 				5115192F157FA071003D3BB4 /* NSFileManager+DirectoryLocations.m */,
+				2AC205D01ECE97CA002016FB /* NSMutableArray+BinarySearch.m */,
+				2AC205D21ECE97DE002016FB /* NSMutableArray+BinarySearch.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -248,6 +256,8 @@
 				5158BDE51568A6EB00EEBAD6 /* utf.h */,
 				5147E45815791D5A00932040 /* ShortcutTableViewController.h */,
 				5147E45915791D5A00932040 /* ShortcutTableViewController.m */,
+				2AC205CB1ECE60F4002016FB /* ExcludedAppsTableViewController.h */,
+				2AC205CC1ECE60F4002016FB /* ExcludedAppsTableViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -363,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5158BDBE1568111A00EEBAD6 /* main.m in Sources */,
+				2AC205CD1ECE60F4002016FB /* ExcludedAppsTableViewController.m in Sources */,
 				5158BDC51568111A00EEBAD6 /* AppDelegate.m in Sources */,
 				5158BDEF1568CB1800EEBAD6 /* KeyboardHandler.m in Sources */,
 				5189A8DF1570CA5100327B99 /* PreferencesController.m in Sources */,
@@ -374,6 +385,7 @@
 				5189A91415711B7F00327B99 /* PTHotKey.m in Sources */,
 				5189A91515711B7F00327B99 /* PTHotKeyCenter.m in Sources */,
 				5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */,
+				2AC205D11ECE97CA002016FB /* NSMutableArray+BinarySearch.m in Sources */,
 				5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */,
 				5189A9221571CC2200327B99 /* AppData.m in Sources */,
 				51F8A4DC1577D41900D42909 /* ShortcutSetting.m in Sources */,

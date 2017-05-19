@@ -18,7 +18,7 @@
 
 #import <Security/Security.h>
 #import "AppDelegate.h"
-
+#import "NSMutableArray+BinarySearch.h"
 
 @implementation AppDelegate
 
@@ -87,6 +87,7 @@ bool dirty;
     [AppData loadUserPrefs];
     [AppData loadHotKeys];
     [AppData loadShortcuts];
+    [AppData loadExcludedApps];
     
     int method = (int)[[AppData sharedAppData].userPrefs integerForKey:NAKL_KEYBOARD_METHOD];
     for (id object in [statusMenu itemArray]) {
@@ -130,9 +131,16 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniChar *x;
     long i;
     
+    NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
+    NSString *activeAppName = [activeApp objectForKey:@"NSApplicationName"];
+
     uint64_t flag = CGEventGetFlags(event);
     
     if (flag & NAKL_MAGIC_NUMBER) {
+        return event;
+    }
+    
+    if ([[AppData sharedAppData].excludedApps binarySearch:activeAppName] != NSNotFound) {
         return event;
     }
     
@@ -223,7 +231,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         break;
                     }
                     
-                    switch( i = [kbHandler addKey:key] ) {
+                    switch([kbHandler addKey:key]) {
                         case -1:
                             
                             break;

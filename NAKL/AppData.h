@@ -27,6 +27,7 @@
 #define NAKL_LOAD_AT_LOGIN @"NAKLLoadAtLogin"
 #define NAKL_TOGGLE_HOTKEY @"NAKLToggleHotKey"
 #define NAKL_SWITCH_METHOD_HOTKEY @"NAKLSwitchMethodHotKey"
+#define NAKL_EXCLUDED_APPS @"NAKLExcludedApps"
 
 @interface AppData : NSObject {
     NSUserDefaults *userPrefs;
@@ -34,6 +35,7 @@
     KeyCombo switchMethodCombo;
     NSMutableArray *shortcuts;
     NSMutableDictionary *shortcutDictionary;
+    NSMutableArray *excludedApps;
 }
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
@@ -43,9 +45,11 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
 @property (readwrite,assign) KeyCombo switchMethodCombo;
 @property (readwrite,assign) NSMutableArray *shortcuts;
 @property (readwrite,assign) NSMutableDictionary *shortcutDictionary;
+@property (readwrite,assign) NSMutableArray *excludedApps;
 
 + (void) loadUserPrefs;
 + (void) loadHotKeys;
 + (void) loadShortcuts;
++ (void) loadExcludedApps;
 
 @end
