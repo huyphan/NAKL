@@ -32,7 +32,7 @@
     NSInteger midIndex = (minIndex + maxIndex) / 2;
     id itemAtMidIndex = [self objectAtIndex:midIndex];
     
-    NSComparisonResult comparison = [searchItem compare:itemAtMidIndex];
+    NSComparisonResult comparison = [searchItem compare:itemAtMidIndex options:NSCaseInsensitiveSearch];
     if (comparison == NSOrderedSame)
         return midIndex;
     else if (comparison == NSOrderedAscending)
