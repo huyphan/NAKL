@@ -37,6 +37,7 @@ KeyboardHandler *kbHandler;
 
 static char rk = 0;
 bool dirty;
+bool osFrom1070 = true;
 
 #pragma mark Initialization
 
@@ -46,6 +47,10 @@ bool dirty;
     NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
+    
+    if (floor(NSAppKitVersionNumber) < NSAppKitVersionNumber10_7) {
+        osFrom1070 = false;
+    }
     
     BOOL accessibilityEnabled = YES;
     
@@ -131,13 +136,13 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     long i;
     NSString *activeAppBundleId;
     
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 1070
-    NSRunningApplication *activeApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
-    activeAppBundleId = [activeApp bundleIdentifier];
-#else
-    NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
-    activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
-#endif
+    if (osFrom1070) {
+        NSRunningApplication *activeApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
+        activeAppBundleId = [activeApp bundleIdentifier];
+    } else {
+        NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
+        activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
+    }
 
     uint64_t flag = CGEventGetFlags(event);
     

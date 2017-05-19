@@ -54,7 +54,7 @@
             NSDictionary* plistData = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingString:@"/Contents/Info.plist"]];
             NSString *appBundleIdentifier = [plistData valueForKeyPath:@"CFBundleIdentifier"];
             NSString *appName = [plistData valueForKeyPath:@"CFBundleName"];
-            if (appName == nil || [appName isEqualToString:@""]) {
+            if ((appName == nil) || [appName isEqualToString:@""]) {
                 appName = [[path lastPathComponent] stringByDeletingPathExtension];
             }
             if ((appBundleIdentifier != nil) && ![[AppData sharedAppData].excludedApps objectForKey:appBundleIdentifier]) {
