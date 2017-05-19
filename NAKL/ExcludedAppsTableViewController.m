@@ -54,10 +54,12 @@
             NSDictionary* plistData = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingString:@"/Contents/Info.plist"]];
             NSString *appBundleIdentifier = [plistData valueForKeyPath:@"CFBundleIdentifier"];
             NSString *appName = [plistData valueForKeyPath:@"CFBundleName"];
+            if ((appName == nil) || [appName isEqualToString:@""]) {
+                appName = [[path lastPathComponent] stringByDeletingPathExtension];
+            }
             if ((appBundleIdentifier != nil) && ![[AppData sharedAppData].excludedApps objectForKey:appBundleIdentifier]) {
                 [[AppData sharedAppData].excludedApps setObject:appName forKey:appBundleIdentifier];
                 [self.list addObject:appBundleIdentifier];
-                NSLog(@"Added");
             }
         }
         [[AppData sharedAppData].userPrefs setObject:[AppData sharedAppData].excludedApps forKey:NAKL_EXCLUDED_APPS];
