@@ -129,9 +129,15 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniChar chars[3];
     UniChar *x;
     long i;
+    NSString *activeAppBundleId;
     
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 1070
+    NSRunningApplication *activeApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
+    activeAppBundleId = [activeApp bundleIdentifier];
+#else
     NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
-    NSString *activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
+    activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
+#endif
 
     uint64_t flag = CGEventGetFlags(event);
     
